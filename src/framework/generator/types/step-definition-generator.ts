@@ -28,6 +28,7 @@ import { TestArea } from '../model/test-area';
 import { SourcesType } from '../../configuration/sources-type.enum';
 import { State } from '../../logging/state';
 import { getImportPath } from '../../helpers/string-helpers';
+import { GeneratorCli } from '../generator-cli';
 
 type StepGenerationMeta = {
     order: number,
@@ -250,7 +251,7 @@ export class StepDefinitionsGenerator extends GeneratorWithProduct {
                                 )])
                             ),
                             //   factory.createStringLiteral("../../../../framework/gherkin/mocha/mocha-controller")
-                            factory.createStringLiteral(getImportPath(resolvedOutput, path.join('src', 'framework', 'gherkin', 'mocha', 'mocha-controller.ts')))
+                            factory.createStringLiteral(getImportPath(resolvedOutput, path.join(...GeneratorCli.importRoot, 'framework', 'gherkin', 'mocha', 'mocha-controller.ts')))
                         )
                     );
                 }

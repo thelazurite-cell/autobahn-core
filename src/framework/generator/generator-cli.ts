@@ -14,6 +14,7 @@ registerPrompt('autocomplete', require('inquirer-autocomplete-prompt'));
 
 export class GeneratorCli {
     private project: Project = new Project();
+    public static importRoot: string[] = ['autobahn-core', 'dist']
 
     public async run(): Promise<void> {
         const projectFile = join(process.cwd(), 'config', 'project.json');
