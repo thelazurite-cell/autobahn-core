@@ -1,5 +1,5 @@
-import { prompt, registerPrompt, Separator } from 'inquirer';
-import { readFileSync } from 'fs';
+import inquirer, { prompt, registerPrompt, Separator } from 'inquirer';
+import { readFileSync, existsSync } from 'fs';
 import { join } from 'path';
 import { Project } from './model/project';
 import { GenerateableTypes } from './model/generateable-types.enum';
@@ -18,6 +18,11 @@ export class GeneratorCli {
 
     public async run(): Promise<void> {
         const projectFile = join(process.cwd(), 'config', 'project.json');
+
+        if (!existsSync(projectFile)) {
+            await this.confirmGenerateProjectFile(projectFile);
+        }
+
         const projectContents = JSON.parse(readFileSync(projectFile, { encoding: 'utf8' }));
         Object.assign(this.project, projectContents);
         const generateOptions = Object.keys(GenerateableTypes);
@@ -29,6 +34,24 @@ export class GeneratorCli {
                 await generator.generate(this.project);
             }
         }
+    }
+
+    private async confirmGenerateProjectFile(projectFile: string): Promise<void> {
+        return new Promise((resolve, reject) => {
+            inquirer.prompt([{
+                type: 'confirm',
+                name: 'project',
+                message:
+                    `Couldn't find the project config, expected it to be in ${projectFile}. Would you like to initialize a new project?`,
+                default: true
+            }]).then((answer) => {
+                console.log(answer);
+                resolve();
+            }).catch(e => {
+                console.log(e);
+                reject(e);
+            });
+        });
     }
 
     private getGenerationType(generateOptions: string[]): Promise<string> {
