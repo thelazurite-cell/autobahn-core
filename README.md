@@ -62,7 +62,7 @@ Building and testing can be performed by running: `npm run ci`
 
 Always happy to have contributions & feedback for the project :-)
 
-The release branch for this repository is `main`
+The release branch for this repository is `main`, code should first have it's own branch then merged into `develop`
 
 # Other noteworthy projects and resources
 
