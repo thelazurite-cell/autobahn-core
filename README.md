@@ -1,20 +1,32 @@
 # Introduction 
-TODO: Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project. 
+Autobahn is a BDD framework for performing API & Browser tests via testcafe, supertest & newman. 
 
-# Getting Started
-TODO: Guide users through getting your code up and running on their own system. In this section you can talk about:
-1.	Installation process
-2.	Software dependencies
-3.	Latest releases
-4.	API references
+
+# Using the framework:
+TODO:
+
+# Building the repo locally
+NPM: 
+`npm i -g verdaccio gulp nodemon` 
+`npm i` 
+
+For versioning, install the GitVersion dotnet tool: 
+`dotnet tool install --global GitVersion.Tool --version 5.*`
 
 # Build and Test
-TODO: Describe and show how to build your code and run the tests. 
+Building and testing can be performed by running: `npm run ci` 
 
 # Contribute
-TODO: Explain how other users and developers can contribute to make your code better. 
+Always happy to have contributions & feedback for the project :-) 
 
-If you want to learn more about creating good readme files then refer the following [guidelines](https://docs.microsoft.com/en-us/azure/devops/repos/git/create-a-readme?view=azure-devops). You can also seek inspiration from the below readme files:
-- [ASP.NET Core](https://github.com/aspnet/Home)
-- [Visual Studio Code](https://github.com/Microsoft/vscode)
-- [Chakra Core](https://github.com/Microsoft/ChakraCore)
+The release branch for this repository is `master`
+
+# Other noteworthy projects and resources 
+
+These are other projects and resources that may come in handy:
+
+[Arthy000/gherkin-testcafe](https://github.com/Arthy000/gherkin-testcafe) - Another gherkin framework for browser/integration testing with testcafe
+
+[TestCafe Documentation](https://testcafe.io/documentation/402632/reference)
+[Supertest Documentation](https://www.npmjs.com/package/supertest)
+[Newman Documentation](https://www.npmjs.com/package/newman) 

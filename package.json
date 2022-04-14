@@ -1,6 +1,6 @@
 {
   "name": "autobahn-core",
-  "version": "0.1.42",
+  "version": "0.1.1",
   "description": "A testing framework for creating API & Browser tests",
   "main": "./dist/program.js",
   "module": "./dist/program.js",
@@ -22,7 +22,14 @@
     "API",
     "Integration",
     "CI",
-    "CD"
+    "CD",
+    "testcafe",
+    "supertest",
+    "newman",
+    "bdd",
+    "gherkin",
+    "test",
+    "framework"
   ],
   "author": "Dylan Eddies",
   "license": "MIT",
@@ -38,9 +45,6 @@
     ".eslintrc.js",
     "LICENSE"
   ],
-  "publishConfig": {
-    "registry": "http://localhost:4873"
-  },
   "bin": {
     "autobahn": "./dist/program.js"
   },
