@@ -50,6 +50,9 @@ A wizard will appear and guide you through the test file generation process.
 
 NPM:
 `npm i -g verdaccio gulp nodemon`
+
+Verdaccio is a tool that creaetes a local NPM registry; this can be used to test the package without having to publish to the public registry.  
+
 `npm i`
 
 For versioning, install the GitVersion dotnet tool:
