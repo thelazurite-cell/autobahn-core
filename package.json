@@ -1,6 +1,6 @@
 {
   "name": "autobahn-core",
-  "version": "0.1.1",
+  "version": "0.1.11-chore-update-documentation.4",
   "description": "A testing framework for creating API & Browser tests",
   "main": "./dist/program.js",
   "module": "./dist/program.js",
