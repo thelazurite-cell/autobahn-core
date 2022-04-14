@@ -1,6 +1,6 @@
 {
   "name": "autobahn-core",
-  "version": "0.1.1",
+  "version": "0.1.11-chore-update-documentation.4",
   "description": "A testing framework for creating API & Browser tests",
   "main": "./dist/program.js",
   "module": "./dist/program.js",
@@ -15,6 +15,13 @@
   },
   "esm": {
     "sourceMap": false
+  },
+  "bugs": {
+    "url": "https://github.com/thelazurite-cell/autobahn-core/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thelazurite-cell/autobahn-core.git"
   },
   "keywords": [
     "automation",

@@ -16,7 +16,7 @@ export class GeneratorCli {
     private project: Project = new Project();
 
     public async run(): Promise<void> {
-        const projectFile = join(process.cwd(), 'src', 'config', 'project.json');
+        const projectFile = join(process.cwd(), 'config', 'project.json');
         const projectContents = JSON.parse(readFileSync(projectFile, { encoding: 'utf8' }));
         Object.assign(this.project, projectContents);
         const generateOptions = Object.keys(GenerateableTypes);
