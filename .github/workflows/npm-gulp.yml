@@ -32,3 +32,9 @@ jobs:
         run: |
           npm install
           npm run ci
+
+      - name: Publish
+        uses: JS-DevTools/npm-publish@v1
+        with:
+          token: ${{ secrets.AUTH_TOKEN }}
+          access: "public"
