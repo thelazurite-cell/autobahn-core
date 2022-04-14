@@ -1,0 +1,17 @@
+{
+  "acceptanceCriteria": {
+    "acceptanceCriteriaItems": [
+      {
+        "tag": "MaxUploadSizeInMb",
+        "value": "20"
+      },
+      {
+        "tag": "NewCriteriaItem"
+      },
+      {
+        "tag": "ExampleTestTag",
+        "value": "ExampleTestTagValue"
+      }
+    ]
+  }
+}

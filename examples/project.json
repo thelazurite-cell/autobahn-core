@@ -1,0 +1,95 @@
+{
+  "cucumberProvider": "@cucumber/cucumber",
+  "usesCertificates": true,
+  "ignoresRegistry": true,
+  "browsers": [
+    {
+      "name": "firefox",
+      "command": "",
+      "headlessCommand": ""
+    },
+    {
+      "name": "chrome",
+      "command": " --allow-insecure-localhost --allow-running-insecure-content --start-maximized --enable-automation --disable-backgrounding-occluded-windows --disable-background-timer-throttling",
+      "headlessCommand": " --disable-web-security --allow-insecure-localhost --allow-running-insecure-content --enable-automation"
+    },
+    {
+      "name": "edge",
+      "command": " --allow-insecure-localhost --allow-running-insecure-content --start-maximized --enable-automation --disable-backgrounding-occluded-windows --disable-background-timer-throttling",
+      "headlessCommand": " --disable-web-security --allow-insecure-localhost --allow-running-insecure-content --enable-automation"
+    }
+  ],
+  "products": [
+    {
+      "productName": "UnitTesting",
+      "containerName": "UnitTestingContainer",
+      "tagConfigName": "UnitTestingTags",
+      "testAreaName": "UnitTestingTestArea",
+      "containerConfig": "./src/products/unit-testing/business-logic/unit-testing.config.ts",
+      "tagConfig": "./src/products/unit-testing/business-logic/unit-testing-tags.config.ts",
+      "testAreaConfig": "./src/products/unit-testing/business-logic/unit-testing-test-areas.config.ts",
+      "baseConfigPath": "./src/config/unit-testing",
+      "baseLogicFolder": "./src/products/unit-testing/business-logic",
+      "basePageObjectFolder": "./src/products/unit-testing/page-object-models",
+      "baseSpecFolder": "./src/products/unit-testing/specs",
+      "apiSpecFolder": "./src/products/unit-testing/specs/api",
+      "browserSpecFolder": "./src/products/unit-testing/specs/browser",
+      "baseStepFolder": "./src/products/unit-testing/steps",
+      "apiStepFolder": "./src/products/unit-testing/steps/api",
+      "browserStepFolder": "./src/products/unit-testing/steps/browser",
+      "variants": [
+        "variantA",
+        "variantB"
+      ],
+      "fallbackVariant": "unit-testing.variantA",
+      "mockApiRequests": [
+        {
+          "name": "solveCaptcha",
+          "usesApplicationUrl": true,
+          "requestTo": "/captchaResponse?id=(.*)",
+          "responseBody": "True",
+          "responseStatusCode": 200
+        }
+      ],
+      "appConfigFiles": [
+        "./src/config/unit-testing/appConfig.unit-testing.variantA.cd.json",
+        "./src/config/unit-testing/appConfig.unit-testing.variantA.test.json",
+        "./src/config/unit-testing/appConfig.unit-testing.variantB.cd.json",
+        "./src/config/unit-testing/appConfig.unit-testing.variantB.test.json"
+      ],
+      "featureConfigFiles": [
+        "./src/config/unit-testing/featureTestConfig.unit-testing.variantA.json",
+        "./src/config/unit-testing/featureTestConfig.unit-testing.variantB.json"
+      ],
+      "logicModels": [
+        {
+          "interfaceName": "IUnitTestingLogicModel",
+          "location": "./src/products/unit-testing/business-logic/unit-testing/unit-testing.business-model.ts",
+          "inherits": "./src/products/unit-testing/business-logic/unit-testing/unit-testing.interface.ts",
+          "testArea": "unit-testing",
+          "variant": "variantA",
+          "name": "UnitTestingLogicModel"
+        }
+      ],
+      "environments": [
+        "cd",
+        "test"
+      ],
+      "testAreas": [
+        {
+          "areaName": "example-area",
+          "sourceType": "browser",
+          "pageObjectModels": [
+            "./src/products/unit-testing/page-object-models/example-area/**/*.ts"
+          ],
+          "specs": [
+            "./src/products/unit-testing/specs/browser/example-area/**/*.spec.feature"
+          ],
+          "steps": [
+            "./src/products/unit-testing/steps/browser/example-area/**/*.steps.ts"
+          ]
+        }
+      ]
+    }
+  ]
+}

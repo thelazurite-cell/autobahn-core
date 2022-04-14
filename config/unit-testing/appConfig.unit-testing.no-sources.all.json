@@ -1,0 +1,20 @@
+{
+  "ssl": false,
+  "testHost": "127.0.0.1",
+  "applicationRoot": "/",
+  "details": {
+    "exampleDetails": "foo",
+    "exampleSecondaryDetail": "bar"
+  },
+  "frameworkConfig": {
+    "pageLoadTimeoutMs": 30000,
+    "ajaxTimeoutMs": 1500,
+    "defaultElementTimeoutMs": 5000,
+    "assertionTimeoutMs": 10000,
+    "testcafeReporters": "spec",
+    "defaultBrowser": "chrome",
+    "parallelThreads": 1,
+    "testSpeed": 1,
+    "maxTestAttempts": 2
+  }
+}

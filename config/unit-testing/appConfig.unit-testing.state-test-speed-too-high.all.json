@@ -1,0 +1,32 @@
+{
+  "ssl": false,
+  "testHost": "127.0.0.1",
+  "applicationRoot": "/",
+  "details": {
+    "exampleDetails": "foo",
+    "exampleSecondaryDetail": "bar"
+  },
+  "frameworkConfig": {
+    "pageLoadTimeoutMs": 30000,
+    "ajaxTimeoutMs": 1500,
+    "defaultElementTimeoutMs": 5000,
+    "assertionTimeoutMs": 10000,
+    "sources": [
+      {
+        "type": "browser",
+        "locations": [
+          "./dist/framework/timespan/timespan.js",
+          "./dist/products/unit-testing/steps/hp/**/*.steps.js",
+          "./dist/products/unit-testing/specs/hp/**/*.spec.feature"
+        ],
+        "provider": "testcafe",
+        "useGherkin": true
+      }
+    ],
+    "testcafeReporters": "spec",
+    "defaultBrowser": "chrome",
+    "parallelThreads": 1,
+    "testSpeed": 23,
+    "maxTestAttempts": 2
+  }
+}

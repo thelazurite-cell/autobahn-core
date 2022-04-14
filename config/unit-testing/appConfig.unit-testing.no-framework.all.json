@@ -1,0 +1,22 @@
+{
+  "ssl": false,
+  "testHost": "127.0.0.1",
+  "applicationRoot": "/",
+  "details": {
+    "passwordSeedWord": "petrichor",
+    "oapiPortalImportUrl": "https://localhost:44354/",
+    "oapiAuthUrl": "https://localhost:54541/",
+    "oapiGrantType": "client_credentials",
+    "oapiScopes": "v2portal-api udgs-connected-api brokerage:brokerage-a",
+    "oapiClientId": "brokerage-a",
+    "oapiBrokerageId": "brokerage-a",
+    "oapiBrokerageEmail": "udgroup.testing+AUTO_agent_A1@gmail.com",
+    "oapiClientSecret": "#Password@123",
+    "oapiAlternateScopes": "v2portal-api udgs-connected-api brokerage:brokerage-b",
+    "oapiAlternateClientId": "brokerage-b",
+    "oapiAlternateBrokerageId": "brokerage-b",
+    "oapiAlternateBrokerageEmail": "udgroup.testing+AUTO_agent_B1@gmail.com",
+    "oapiAlternateClientSecret": "#Password@123",
+    "portalIdentifier": "BASE-001-S"
+  }
+}

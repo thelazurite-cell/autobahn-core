@@ -1,0 +1,63 @@
+{
+  "testConfiguration": [
+    {
+      "tag": "RunWarmUp",
+      "shouldRun": true
+    },
+    {
+      "tag": "ExampleTag",
+      "shouldRun": true
+    },
+    {
+      "tag": "Ignore",
+      "shouldRun": false,
+      "because": "Tests have been set as ignored. Ensure that they should be."
+    },
+    {
+      "tag": "AnotherTagToIgnore",
+      "shouldRun": false,
+      "because": "Tests have been set as ignored."
+    },
+    {
+      "tag": "Foo",
+      "shouldRun": true
+    },
+    {
+      "tag": "Bar",
+      "shouldRun": true
+    },
+    {
+      "tag": "Lorem",
+      "shouldRun": true
+    },
+    {
+      "tag": "Ipsum",
+      "shouldRun": true
+    },
+    {
+      "tag": "Dolor",
+      "shouldRun": true
+    },
+    {
+      "tag": "Sit",
+      "shouldRun": true
+    },
+    {
+      "tag": "Amet",
+      "shouldRun": false,
+      "because": "This is an example"
+    }
+  ],
+  "acceptanceCriteria": {
+    "acceptanceCriteriaItems": [
+      {
+        "tag": "MaxUploadSizeInMb",
+        "value": "20"
+      },
+      {
+        "tag": "ExampleTestTag",
+        "value": "ExampleTestTagValue"
+      }
+    ]
+  }
+}

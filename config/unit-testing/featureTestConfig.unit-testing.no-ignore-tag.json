@@ -1,0 +1,27 @@
+{
+  "testConfiguration": [
+    {
+      "tag": "RunWarmUp",
+      "shouldRun": true
+    },
+    {
+      "tag": "ExampleTag",
+      "shouldRun": true
+    }
+  ],
+  "acceptanceCriteria": {
+    "acceptanceCriteriaItems": [
+      {
+        "tag": "MaxUploadSizeInMb",
+        "value": "20"
+      },
+      {
+        "tag": "NewCriteriaItem"
+      },
+      {
+        "tag": "ExampleTestTag",
+        "value": "ExampleTestTagValue"
+      }
+    ]
+  }
+}

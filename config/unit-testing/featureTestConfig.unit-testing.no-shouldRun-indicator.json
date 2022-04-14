@@ -1,0 +1,32 @@
+{
+  "testConfiguration": [
+    {
+      "tag": "RunWarmUp",
+      "shouldRun": true
+    },
+    {
+      "tag": "ExampleTag",
+      "shouldRun": true
+    },
+    {
+      "tag": "Ignore",
+      "shouldRun": false,
+      "because": "Tests have been set as ignored."
+    },
+    {
+      "tag": "ExampleTestTag"
+    }
+  ],
+  "acceptanceCriteria": {
+    "acceptanceCriteriaItems": [
+      {
+        "tag": "MaxUploadSizeInMb",
+        "value": "20"
+      },
+      {
+        "tag": "ExampleTestTag",
+        "value": "ExampleTestTagValue"
+      }
+    ]
+  }
+}

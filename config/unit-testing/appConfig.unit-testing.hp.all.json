@@ -1,0 +1,35 @@
+{
+  "ssl": false,
+  "testHost": "127.0.0.1",
+  "applicationRoot": "/",
+  "details": {
+    "exampleDetails": "foo",
+    "exampleSecondaryDetail": "bar"
+  },
+  "dataConnections": {
+    "exampleConnectionString": "Data Source=(hoaxaldb)\\AnyDBName;Initial Catalog=ThisDoesntExist;Persist Security Info=True;Pooling=true"
+  },
+  "frameworkConfig": {
+    "pageLoadTimeoutMs": 30000,
+    "ajaxTimeoutMs": 1500,
+    "defaultElementTimeoutMs": 5000,
+    "assertionTimeoutMs": 10000,
+    "sources": [
+      {
+        "type": "browser",
+        "locations": [
+          "./dist/framework/timespan/timespan.js",
+          "./dist/products/unit-testing/steps/hp/**/*.steps.js",
+          "./dist/products/unit-testing/specs/hp/**/*.spec.feature"
+        ],
+        "provider": "testcafe",
+        "useGherkin": true
+      }
+    ],
+    "testcafeReporters": "spec",
+    "defaultBrowser": "chrome",
+    "parallelThreads": 1,
+    "testSpeed": 1,
+    "maxTestAttempts": 2
+  }
+}

@@ -1,0 +1,247 @@
+{
+  "type": "object",
+  "properties": {
+    "cucumberProvider": {
+      "description": "Cucumber provider for the project.",
+      "type": "string",
+      "default": ""
+    },
+    "browsers": {
+      "description": "Gets or sets the browser specific configuration to use for the provided application environment.",
+      "type": "array",
+      "items": { "$ref": "#/definitions/Browser" },
+      "default": []
+    },
+    "products": {
+      "description": "The products related to the automation test project",
+      "type": "array",
+      "items": { "$ref": "#/definitions/Product" },
+      "default": []
+    },
+    "usesCertificates": {
+      "description": "The value determining whether the test runner should create self signed certificates.",
+      "type": "boolean",
+      "default": true
+    },
+    "ignoresRegistry": {
+      "description": "The value determining whether the registry definition for the downloads folder should be looked up\non the win32 plaform",
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "definitions": {
+    "Browser": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "description": "The name of the browser (i.e. firefox, edge, chrome, etc.)",
+          "type": "string",
+          "default": ""
+        },
+        "command": {
+          "description": "The extra command parameters to use if the browser is not running in headless mode.",
+          "type": "string",
+          "default": ""
+        },
+        "headlessCommand": {
+          "description": "The extra command parameters to use if the browser is running in headless mode.",
+          "type": "string",
+          "default": ""
+        }
+      }
+    },
+    "Product": {
+      "type": "object",
+      "properties": {
+        "productName": {
+          "description": "The name of the product",
+          "type": "string",
+          "default": ""
+        },
+        "containerName": {
+          "description": "The name of the IOC container",
+          "type": "string",
+          "default": ""
+        },
+        "tagConfigName": {
+          "description": "Tag config name for the product",
+          "type": "string",
+          "default": ""
+        },
+        "testAreaName": {
+          "description": "Test area name for the product",
+          "type": "string",
+          "default": ""
+        },
+        "containerConfig": {
+          "description": "The IOC container for the product",
+          "type": "string",
+          "default": ""
+        },
+        "tagConfig": {
+          "description": "Tag config file for the product",
+          "type": "string",
+          "default": ""
+        },
+        "testAreaConfig": {
+          "description": "Test area config file for the product",
+          "type": "string",
+          "default": ""
+        },
+        "baseLogicFolder": {
+          "description": "The folder location for the business logic models.",
+          "type": "string",
+          "default": ""
+        },
+        "basePageObjectFolder": {
+          "description": "the folder for storing the page object models.",
+          "type": "string",
+          "default": ""
+        },
+        "baseSpecFolder": {
+          "description": "the folder for storing the spec files",
+          "type": "string",
+          "default": ""
+        },
+        "apiSpecFolder": {
+          "description": "the folder for storing the api spec files",
+          "type": "string",
+          "default": ""
+        },
+        "browserSpecFolder": {
+          "description": "the folder for storing the browser spec files",
+          "type": "string",
+          "default": ""
+        },
+        "baseStepFolder": {
+          "description": "the folder for storing the step files.",
+          "type": "string",
+          "default": ""
+        },
+        "apiStepFolder": {
+          "description": "the folder for storing the api step files.",
+          "type": "string",
+          "default": ""
+        },
+        "browserStepFolder": {
+          "description": "the folder for storing the browser step files.",
+          "type": "string",
+          "default": ""
+        },
+        "testAreas": {
+          "description": "Test areas of the product",
+          "type": "array",
+          "items": { "$ref": "#/definitions/TestArea" },
+          "default": []
+        },
+        "logicModels": {
+          "description": "The business logic models associated with the product",
+          "type": "array",
+          "items": { "$ref": "#/definitions/LogicModel" },
+          "default": []
+        },
+        "variants": {
+          "description": "Variants of the product",
+          "type": "array",
+          "items": { "type": "string" },
+          "default": []
+        },
+        "fallbackVariant": {
+          "description": "The default variant to use with the generator",
+          "type": "string",
+          "default": ""
+        },
+        "environments": {
+          "description": "Environments for the product",
+          "type": "array",
+          "items": { "type": "string" },
+          "default": []
+        },
+        "appConfigFiles": {
+          "description": "Application Config files for the product",
+          "type": "array",
+          "items": { "type": "string" },
+          "default": []
+        },
+        "featureConfigFiles": {
+          "description": "Feature Config files for the product",
+          "type": "array",
+          "items": { "type": "string" },
+          "default": []
+        },
+        "baseConfigPath": {
+          "description": "The Base configuration path for the product",
+          "type": "string",
+          "default": ""
+        },
+        "mockApiRequests": {
+          "description": "The mock api requests that the product can use",
+          "type": "array",
+          "items": { "$ref": "#/definitions/MockApiRequest" },
+          "default": []
+        },
+        "newmanCollectionPath": {
+          "description": "Newman collection path for the product",
+          "type": "string"
+        }
+      }
+    },
+    "TestArea": {
+      "type": "object",
+      "properties": {
+        "areaName": {
+          "description": "The test area name",
+          "type": "string",
+          "default": ""
+        },
+        "pageObjectModels": {
+          "description": "The page object models for the testing area",
+          "type": "array",
+          "items": { "type": "string" },
+          "default": []
+        },
+        "sourceType": {
+          "$ref": "#/definitions/SourcesType",
+          "description": "The source type for the test area"
+        },
+        "specs": {
+          "description": "The feature files for the test area",
+          "type": "array",
+          "items": { "type": "string" },
+          "default": []
+        },
+        "steps": {
+          "description": "The step definitions for the test area",
+          "type": "array",
+          "items": { "type": "string" },
+          "default": []
+        }
+      }
+    },
+    "SourcesType": { "enum": ["api", "browser", "newman"], "type": "string" },
+    "LogicModel": {
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "location": { "type": "string" },
+        "inherits": { "type": "string" },
+        "variant": { "type": "string" },
+        "testArea": { "type": "string" },
+        "inheritsName": { "type": "string" },
+        "interfaceName": { "type": "string" }
+      }
+    },
+    "MockApiRequest": {
+      "type": "object",
+      "properties": {
+        "name": { "type": "string", "default": "" },
+        "requestTo": { "type": "string", "default": "" },
+        "usesApplicationUrl": { "type": "boolean" },
+        "hostUrl": { "type": "string" },
+        "responseStatusCode": { "type": "number" },
+        "responseBody": { "type": "string" }
+      }
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

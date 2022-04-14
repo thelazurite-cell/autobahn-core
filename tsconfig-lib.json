@@ -1,0 +1,37 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "resolveJsonModule": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "target": "es6",
+    "rootDir": "./",
+    "esModuleInterop": true,
+    "declaration": true,
+    "typeRoots": [
+      "./framework/gherkin/",
+      "./framework/driver/assertions/",
+      "./node_modules/@types"
+    ],
+    "forceConsistentCasingInFileNames": true,
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "declarationDir": "./ts-defs",
+    "declarationMap": false,
+    "emitDeclarationOnly": true,
+    "allowJs": true
+  },
+  "include": [
+    "src/program.js",
+    "src/*",
+    "src/framework/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    ".idea",
+    ".vscode",
+    "src/tests/**/*",
+    "src/products/**/*"
+  ]
+}
