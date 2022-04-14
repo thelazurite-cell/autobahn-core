@@ -16,6 +16,13 @@
   "esm": {
     "sourceMap": false
   },
+  "bugs": {
+    "url": "https://github.com/thelazurite-cell/autobahn-core/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thelazurite-cell/autobahn-core.git"
+  },
   "keywords": [
     "automation",
     "testing",
