@@ -1,10 +1,10 @@
-name: Build & Publish 
+name: Build & Publish
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   build:
@@ -13,21 +13,23 @@ jobs:
     strategy:
       matrix:
         node-version: [14.x, 16.x]
-        
-    
+
     steps:
-    - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
 
-    - name: Setup GitVersion
-      run: |
-        dotnet tool install --global GitVersion.Tool --version 5.*
+      - name: Setup GitVersion
+        uses: GitTools/actions@v0.9.13
+        with:
+          versionSpec: "5.x"
 
-    - name: Build
-      run: |
-        npm install
-        npm run ci 
+      - name: Build
+        run: |
+          npm install
+          npm run ci
