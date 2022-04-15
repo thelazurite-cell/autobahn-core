@@ -335,7 +335,7 @@ export class ProductGenerator implements IGenerator {
 
     updateProject(): void {
         this.baseProductPath = path.join(process.cwd(), 'src', 'products', this.answers.productName);
-        this.baseConfigPath = path.join(process.cwd(), 'src', 'config', this.answers.productName);
+        this.baseConfigPath = path.join(process.cwd(), 'config', this.answers.productName);
         const spinner = ora('Updating project definition').start();
         const product = new Product();
         product.productName = this.answers.productName;
@@ -372,7 +372,7 @@ export class ProductGenerator implements IGenerator {
         product.environments.push(this.answers.environment);
         this.project.products.push(product);
         this.product = product;
-        fs.writeFileSync(path.join(process.cwd(), 'src', 'config', 'project.json'), prettier.format(JSON.stringify(this.project), { parser: 'json' }));
+        fs.writeFileSync(path.join(process.cwd(), 'config', 'project.json'), prettier.format(JSON.stringify(this.project), { parser: 'json' }));
         spinner.succeed('Updated project definition');
     }
 }

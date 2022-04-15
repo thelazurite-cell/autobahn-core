@@ -346,7 +346,7 @@ export class LogicModelGenerator extends GeneratorWithProduct {
         // update project config
         spinner = ora('Updating project configuration').start();
         this.product.logicModels.push(logicModel);
-        fs.writeFileSync(path.join(process.cwd(), 'src', 'config', 'project.json'), prettier.format(JSON.stringify(project), { parser: 'json' }));
+        fs.writeFileSync(path.join(process.cwd(), 'config', 'project.json'), prettier.format(JSON.stringify(project), { parser: 'json' }));
         spinner.succeed('Updated the project configuration');
 
     }
