@@ -56,8 +56,17 @@ export class GeneratorCli {
         ])
         .then((answer) => {
           if (answer.project) {
-            mkdirSync(join(process.cwd(), 'config'));
-            mkdirSync(join(process.cwd(), 'src'));
+            const configDirectory = join(process.cwd(), 'config');
+            const sourceDirectory = join(process.cwd(), 'src');
+            
+            if(!existsSync(configDirectory)) {
+                mkdirSync(configDirectory);
+            }
+
+            if(!existsSync(sourceDirectory)) {
+                mkdirSync(sourceDirectory);
+            }
+            
             const project = new Project();
             writeFileSync(
               projectFile,
