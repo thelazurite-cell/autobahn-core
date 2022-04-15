@@ -45,10 +45,18 @@ export class GeneratorCli {
                 type: 'confirm',
                 name: 'project',
                 message:
-                    `Couldn't find the project config, expected it to be in ${projectFile}. Would you like to initialize a new project?`,
+                    `Couldn't find the project config, expected it to be in:\n ${projectFile}.\n\n Would you like to initialize a new project?`,
                 default: true
             }]).then((answer) => {
-                console.log(answer);
+                if(answer.project){
+                    shell.mkdir(join(process.cwd(), 'config'));
+                    const project = new Project();
+                    writeFileSync(projectFile, prettier.format(JSON.stringify(project)));
+                } else {
+                    console.error('Cannot proceed without a package.json file');
+                    process.exit(-1);
+                }
+
                 resolve();
             }).catch(e => {
                 console.log(e);
