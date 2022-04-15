@@ -1,5 +1,5 @@
 import inquirer, { prompt, registerPrompt, Separator } from 'inquirer';
-import { readFileSync, existsSync, writeFileSync } from 'fs';
+import { readFileSync, existsSync, writeFileSync, mkdirSync } from 'fs';
 import { join } from 'path';
 import { Project } from './model/project';
 import { GenerateableTypes } from './model/generateable-types.enum';
@@ -7,7 +7,6 @@ import { FrameworkContainer } from '../framework.config';
 import { IGenerator } from './interfaces/generator.interface';
 import { FrameworkTags } from '../framework-tags.config';
 import { FrameworkFunctionality } from '../framework-functionality.config';
-import shell from 'shelljs';
 import prettier from 'prettier';
 
 registerPrompt('table', require('inquirer-table-prompt'));
@@ -57,7 +56,8 @@ export class GeneratorCli {
         ])
         .then((answer) => {
           if (answer.project) {
-            shell.mkdir(join(process.cwd(), 'config'));
+            mkdirSync(join(process.cwd(), 'config'));
+            mkdirSync(join(process.cwd(), 'src'));
             const project = new Project();
             writeFileSync(
               projectFile,

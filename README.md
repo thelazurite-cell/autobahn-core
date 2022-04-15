@@ -22,7 +22,7 @@ in the scripts property of your `package.json` file add the following:
 "generate": "autobahn generate"
 ```
 
-Then run the script (`npm run generate`). On the first run it will ask you to create a project config file.
+Then run the script (`npm run generate`). On the first run it will ask you to create a project config file. Doing this will also generate the basic folder structure.
 
 After that generate your first project config :)
 
