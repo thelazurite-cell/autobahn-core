@@ -6,12 +6,28 @@ export class Project {
     /**
      * Cucumber provider for the project.
      */
-    public cucumberProvider: string = '';
+    public cucumberProvider: string = '@cucumber/cucumber';
 
     /**
      * Gets or sets the browser specific configuration to use for the provided application environment.
      */
-    public browsers: Browser[] = [];
+    public browsers: Browser[] = [
+        {
+            name: 'firefox',
+            command: '',
+            headlessCommand: ''
+        },
+        {
+            name: 'chrome',
+            command: ' --allow-insecure-localhost --allow-running-insecure-content --start-maximized --enable-automation --disable-backgrounding-occluded-windows --disable-background-timer-throttling',
+            headlessCommand: ' --disable-web-security --allow-insecure-localhost --allow-running-insecure-content --enable-automation'
+        },
+        {
+            name: 'edge',
+            command: ' --allow-insecure-localhost --allow-running-insecure-content --start-maximized --enable-automation --disable-backgrounding-occluded-windows --disable-background-timer-throttling',
+            headlessCommand: ' --disable-web-security --allow-insecure-localhost --allow-running-insecure-content --enable-automation'
+        }
+    ];
 
     /**
      * The products related to the automation test project

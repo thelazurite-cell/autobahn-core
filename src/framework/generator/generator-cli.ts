@@ -1,5 +1,5 @@
 import inquirer, { prompt, registerPrompt, Separator } from 'inquirer';
-import { readFileSync, existsSync } from 'fs';
+import { readFileSync, existsSync, writeFileSync } from 'fs';
 import { join } from 'path';
 import { Project } from './model/project';
 import { GenerateableTypes } from './model/generateable-types.enum';
@@ -7,6 +7,9 @@ import { FrameworkContainer } from '../framework.config';
 import { IGenerator } from './interfaces/generator.interface';
 import { FrameworkTags } from '../framework-tags.config';
 import { FrameworkFunctionality } from '../framework-functionality.config';
+import shell from 'shelljs';
+import prettier from 'prettier';
+
 
 registerPrompt('table', require('inquirer-table-prompt'));
 registerPrompt('checkbox-plus', require('inquirer-checkbox-plus-prompt'));
