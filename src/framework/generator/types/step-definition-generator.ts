@@ -338,6 +338,7 @@ export class StepDefinitionsGenerator extends GeneratorWithProduct {
                     undefined,
                     hasParameters ?
                         [
+                            this.testControllerParam(area),
                             ts.factory.createParameterDeclaration(
                                 undefined,
                                 undefined,
@@ -348,8 +349,7 @@ export class StepDefinitionsGenerator extends GeneratorWithProduct {
                                 undefined,
                                 undefined,
                                 undefined
-                            ),
-                            this.testControllerParam(area)
+                            )
                         ]
                         : [this.testControllerParam(area)],
                     undefined,

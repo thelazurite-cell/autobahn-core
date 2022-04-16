@@ -167,6 +167,7 @@ function buildExample(cb) {
   shell.cd(".\\examples");
   shell.cd(".\\ddg-example");
   shell.exec("npm run build", { silent: true });
+  shell.exec("npm i -g node@14.17.0");
   cb();
 }
 
@@ -213,6 +214,7 @@ exports.ci = series(
   exports.build,
   test,
   exports.copyFiles,
+  exports.testExample,
   cleanForPublish,
   checkVersioning,
   updateSchemas
