@@ -28,6 +28,10 @@ Then run the script (`npm run generate`). On the first run it will ask you to cr
 
 After that generate your first project config :) Also feel free to check out the [Examples](https://github.com/thelazurite-cell/autobahn-core/tree/main/examples) folder to get a head start.
 
+<p align="center">
+  <img src="https://raw.github.com/thelazurite-cell/autobahn-core/master/media/example_run.png" alt="Example test run with autobahn" />
+</p>
+
 # Using the framework:
 
 #### CLI usage:

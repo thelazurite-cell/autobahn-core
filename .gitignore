@@ -48,8 +48,9 @@ jspm_packages/
 
 
 # Output Folder
-Reports/**/*
-dist/**/*
+**/Reports/**/*
+**/dist/**/*
+artifacts/**/*
 
 # TypeScript v1 declaration files
 typings/
