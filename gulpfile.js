@@ -213,7 +213,6 @@ exports.ci = series(
   exports.build,
   test,
   exports.copyFiles,
-  exports.testExample,
   cleanForPublish,
   checkVersioning,
   updateSchemas
@@ -221,3 +220,4 @@ exports.ci = series(
 exports.watchBuild = parallel(buildTypescript, exports.copyFiles, lint);
 exports.watch = watch;
 exports.default = exports.build;
+exports.cleanExample = cleanExample;

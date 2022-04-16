@@ -1,6 +1,6 @@
 {
   "name": "autobahn-core",
-  "version": "0.4.0-alpha.13",
+  "version": "0.4.0-alpha.22",
   "description": "A testing framework for creating API & Browser tests",
   "main": "./dist/program.js",
   "module": "./dist/program.js",
@@ -11,7 +11,8 @@
     "build": "gulp",
     "ci": "gulp ci",
     "watch:build": "gulp watch",
-    "watch": "nodemon --exec npm run watch:build --watch src -e js,mjs,json,feature,ts"
+    "watch": "nodemon --exec npm run watch:build --watch src -e js,mjs,json,feature,ts",
+    "cleanExample": "gulp cleanExample"
   },
   "esm": {
     "sourceMap": false
