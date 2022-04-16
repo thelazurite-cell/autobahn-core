@@ -154,7 +154,7 @@ exports.copyFiles = parallel(
 );
 exports.build = series(clean, lint, buildTypescript, exports.copyFiles);
 exports.updateSchemas = updateSchemas;
-exports.ci = series(exports.build, exports.testExample, checkVersioning);
+exports.ci = series(exports.build, checkVersioning);
 exports.watchBuild = parallel(buildTypescript, exports.copyFiles, lint);
 exports.watch = watch;
 exports.default = exports.build;

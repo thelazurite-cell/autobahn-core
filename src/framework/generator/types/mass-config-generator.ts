@@ -52,7 +52,7 @@ export abstract class MassConfigGenerator extends GeneratorWithProduct {
     }
 
     protected saveProject(project: Project): void {
-        fs.writeFileSync(path.resolve(path.join(process.cwd(), 'src', 'config', 'project.json')), prettier.format(JSON.stringify(project), { parser: 'json' }));
+        fs.writeFileSync(path.resolve(path.join(process.cwd(), 'config', 'project.json')), prettier.format(JSON.stringify(project), { parser: 'json' }));
     }
 
     getUsesSsl(variant: string, environment: string): Promise<boolean> {

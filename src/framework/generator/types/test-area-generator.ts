@@ -57,7 +57,7 @@ export class TestAreaGenerator extends GeneratorWithProduct {
         newTestArea.specs.push(path.join(path.relative(process.cwd(), specsDir), '**', '*.spec.feature'));
         product.testAreas.push(newTestArea);
 
-        fs.writeFileSync(path.join(process.cwd(), 'src', 'config', 'project.json'), prettier.format(JSON.stringify(project), { parser: 'json' }));
+        fs.writeFileSync(path.join(process.cwd(), 'config', 'project.json'), prettier.format(JSON.stringify(project), { parser: 'json' }));
 
         console.log(newTestArea);
         return Promise.resolve();

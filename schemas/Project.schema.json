@@ -4,13 +4,25 @@
     "cucumberProvider": {
       "description": "Cucumber provider for the project.",
       "type": "string",
-      "default": ""
+      "default": "@cucumber/cucumber"
     },
     "browsers": {
       "description": "Gets or sets the browser specific configuration to use for the provided application environment.",
       "type": "array",
       "items": { "$ref": "#/definitions/Browser" },
-      "default": []
+      "default": [
+        { "name": "firefox", "command": "", "headlessCommand": "" },
+        {
+          "name": "chrome",
+          "command": " --allow-insecure-localhost --allow-running-insecure-content --start-maximized --enable-automation --disable-backgrounding-occluded-windows --disable-background-timer-throttling",
+          "headlessCommand": " --disable-web-security --allow-insecure-localhost --allow-running-insecure-content --enable-automation"
+        },
+        {
+          "name": "edge",
+          "command": " --allow-insecure-localhost --allow-running-insecure-content --start-maximized --enable-automation --disable-backgrounding-occluded-windows --disable-background-timer-throttling",
+          "headlessCommand": " --disable-web-security --allow-insecure-localhost --allow-running-insecure-content --enable-automation"
+        }
+      ]
     },
     "products": {
       "description": "The products related to the automation test project",

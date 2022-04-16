@@ -94,7 +94,7 @@ export class MockRequestGenerator extends GeneratorWithProduct {
                 });
 
                 console.log(ans);
-                fs.writeFileSync(path.resolve(path.join(process.cwd(), 'src', 'config', 'project.json')), prettier.format(JSON.stringify(project), { parser: 'json' }));
+                fs.writeFileSync(path.resolve(path.join(process.cwd(), 'config', 'project.json')), prettier.format(JSON.stringify(project), { parser: 'json' }));
 
                 return resolve();
             }).catch(e => reject(e));

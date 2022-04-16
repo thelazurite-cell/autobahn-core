@@ -13,6 +13,7 @@ import { camelize, getImportPath, kebabize } from '../../helpers/string-helpers'
 import { State } from '../../logging/state';
 import createTestCafe from 'testcafe';
 import { GeneratePageObjects } from './GeneratePageObjects';
+import { GeneratorCli } from '../generator-cli';
 
 const fuzzy = require('fuzzy');
 
@@ -107,16 +108,18 @@ export class PageObjectModelGenerator extends GeneratorWithProduct {
                     undefined,
                     factory.createNamedImports([
                         factory.createImportSpecifier(
+                            false,
                             undefined,
-                            factory.createIdentifier('$'), null
+                            factory.createIdentifier('$')
                         ),
                         factory.createImportSpecifier(
+                            false,
                             undefined,
-                            factory.createIdentifier('Locator'), null
+                            factory.createIdentifier('Locator')
                         )
                     ])
                 ),
-                factory.createStringLiteral(getImportPath(filePath, path.join('src', 'framework', 'driver', 'locators', 'locator.ts')))
+                factory.createStringLiteral(getImportPath(filePath, path.join(...GeneratorCli.importRoot, 'framework', 'driver', 'locators', 'locator.ts')))
             ),
             factory.createImportDeclaration(
                 undefined,
@@ -125,11 +128,12 @@ export class PageObjectModelGenerator extends GeneratorWithProduct {
                     false,
                     undefined,
                     factory.createNamedImports([factory.createImportSpecifier(
+                        false,
                         undefined,
-                        factory.createIdentifier('LocatorType'), null
+                        factory.createIdentifier('LocatorType')
                     )])
                 ),
-                factory.createStringLiteral(getImportPath(filePath, path.join('src', 'framework', 'driver', 'locators', 'locator-type.ts')))
+                factory.createStringLiteral(getImportPath(filePath, path.join(...GeneratorCli.importRoot, 'framework', 'driver', 'locators', 'locator-type.ts')))
             ),
             factory.createImportDeclaration(
                 undefined,
@@ -138,11 +142,12 @@ export class PageObjectModelGenerator extends GeneratorWithProduct {
                     false,
                     undefined,
                     factory.createNamedImports([factory.createImportSpecifier(
+                        false,
                         undefined,
-                        factory.createIdentifier('PageObjectModel'), null
+                        factory.createIdentifier('PageObjectModel')
                     )])
                 ),
-                factory.createStringLiteral(getImportPath(filePath, path.join('src', 'framework', 'driver', 'page-object-model.ts')))
+                factory.createStringLiteral(getImportPath(filePath, path.join(...GeneratorCli.importRoot, 'framework', 'driver', 'page-object-model.ts')))
             ),
             factory.createClassDeclaration(
                 undefined,

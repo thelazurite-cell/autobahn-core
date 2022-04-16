@@ -4,32 +4,28 @@
     "resolveJsonModule": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "target": "es6",
+    "target": "ESNext",
     "rootDir": "./",
     "esModuleInterop": true,
     "typeRoots": [
-      "./framework/gherkin/",
-      "./framework/driver/assertions/ ",
-      "./node_modules/@types"
+      "../../node_modules/@types",
+      "../../dist"
     ],
     "forceConsistentCasingInFileNames": true,
     "allowSyntheticDefaultImports": true,
     "moduleResolution": "node",
-    "declaration": true,
-    "declarationMap": false,
-    "sourceMap": false,
+    "sourceMap": true,
     "outDir": "./dist",
     "allowJs": true,
-    "types":[
-      "testcafe",
+    "types": [
       "long"
     ]
   },
   "include": [
-    "src/**/*"
+    "./src/**/*",
   ],
   "exclude": [
-    "node_modules",
+    "../../node_modules",
     ".idea",
     ".vscode"
   ]

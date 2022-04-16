@@ -18,19 +18,22 @@ export function kebabize(str: string): string {
     }).join('').replace(/_/g, '-');
 }
 
-export function getImportPath(thisLocation: string, importLocation: string): string {
+export function getImportPath(thisLocation: string, importLocation: string, isPackage: boolean = true): string {
     const backwardsSlash = thisLocation.indexOf('\\') > -1;
     const splitLocation = thisLocation.split(backwardsSlash ? '\\' : '/');
     splitLocation.pop();
 
     const sourceFile = resolve(join(...splitLocation));
-    let importPath = relative(
+    const extensionRemoved = importLocation.replace('.ts', '');
+    let importPath = isPackage ? extensionRemoved.replace(/\\/g, '/') : relative(
         sourceFile,
-        resolve(importLocation).replace('.ts', '')
+        resolve(extensionRemoved)
     ).replace(/\\/g, '/');
 
-    if (!importPath.startsWith('./') && !importPath.startsWith('../')) {
-        importPath = `./${importPath}`;
+    if (!isPackage) {
+        if (!importPath.startsWith('./') && !importPath.startsWith('../')) {
+            importPath = `./${importPath}`;
+        }
     }
 
     return importPath;

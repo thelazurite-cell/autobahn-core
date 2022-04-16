@@ -79,7 +79,7 @@ function cleanForPublish(cb) {
 }
 
 function copyFeatureFiles() {
-  return gulp.src("./src/**/specs/**/*.feature").pipe(gulp.dest("./dist/"));
+  return gulp.src("./src/**/*.feature").pipe(gulp.dest("./dist/"));
 }
 
 function copyResourceFiles() {
@@ -163,6 +163,29 @@ function watch(cb) {
   });
 }
 
+function buildExample(cb) {
+  shell.cd(".\\examples");
+  shell.cd(".\\ddg-example");
+  shell.exec("npm run build", { silent: true });
+  cb();
+}
+
+function runExample(cb) {
+  shell.exec("npm run test:headless");
+  cb();
+}
+
+function cleanExample(cb) {
+  shell.cd("./Reports");
+  shell.mv("*", "../../../artifacts/");
+  shell.cd("..");
+  shell.rm("-r", "Reports/");
+  shell.exec("npm run clean", { silent: true });
+  shell.cd("..");
+  shell.cd("..");
+  cb();
+}
+
 function notify(title, msg) {
   var notifier = require("node-notifier");
 
@@ -183,6 +206,7 @@ exports.copyFiles = parallel(
   copyResourceFiles,
   copyConfig
 );
+exports.testExample = series(buildExample, runExample, cleanExample);
 exports.build = series(clean, lint, buildTypescript, exports.copyFiles);
 exports.updateSchemas = updateSchemas;
 exports.ci = series(
@@ -196,3 +220,4 @@ exports.ci = series(
 exports.watchBuild = parallel(buildTypescript, exports.copyFiles, lint);
 exports.watch = watch;
 exports.default = exports.build;
+exports.cleanExample = cleanExample;

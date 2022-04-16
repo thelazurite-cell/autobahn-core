@@ -21,7 +21,7 @@ import { State } from '../../logging/state';
 export class LogicModelGenerator extends GeneratorWithProduct {
     generateType: string = 'Logic Model';
     product: Product;
-    printer: ts.Printer = ts.createPrinter({ newLine: ts.NewLineKind.LineFeed, removeComments: false });
+    printer: ts.Printer = ts.createPrinter({ newLine: ts.NewLineKind.CarriageReturnLineFeed });
 
     async generate(project: Project): Promise<void> {
         let testArea: TestArea;
@@ -97,7 +97,7 @@ export class LogicModelGenerator extends GeneratorWithProduct {
         spinner = ora('Create logic model class').start();
 
         // work out where the interface / inheriting class is in relation to the logic model class.
-        const importPath = getImportPath(logicModel.location, logicModel.inherits);
+        const importPath = getImportPath(logicModel.location, logicModel.inherits, false);
 
         const classNodes = [
             factory.createImportDeclaration(
@@ -107,11 +107,13 @@ export class LogicModelGenerator extends GeneratorWithProduct {
                     false,
                     undefined,
                     factory.createNamedImports([factory.createImportSpecifier(
+                        false,
                         undefined,
-                        factory.createIdentifier(inheritName), null
+                        factory.createIdentifier(inheritName)
                     )])
                 ),
-                factory.createStringLiteral(importPath)
+                factory.createStringLiteral(importPath),
+                undefined
             ),
             factory.createImportDeclaration(
                 undefined,
@@ -120,11 +122,13 @@ export class LogicModelGenerator extends GeneratorWithProduct {
                     false,
                     undefined,
                     factory.createNamedImports([factory.createImportSpecifier(
+                        false,
                         undefined,
-                        factory.createIdentifier('injectable'), null
+                        factory.createIdentifier('injectable')
                     )])
                 ),
-                factory.createStringLiteral('inversify')
+                factory.createStringLiteral('inversify'),
+                undefined
             ),
             factory.createClassDeclaration(
                 [factory.createDecorator(factory.createCallExpression(
@@ -236,7 +240,6 @@ export class LogicModelGenerator extends GeneratorWithProduct {
                     )
                 ];
 
-
                 const resultFile = ts.createSourceFile(path.resolve(this.product.testAreaConfig), '', ts.ScriptTarget.Latest, false, ts.ScriptKind.TS);
                 const result = this.printer.printList(ts.ListFormat.MultiLine, <any>resultNodes, resultFile);
                 const testAreaFile = path.resolve(this.product.testAreaConfig);
@@ -252,13 +255,54 @@ export class LogicModelGenerator extends GeneratorWithProduct {
         const program = ts.createProgram([containerFile], { allowJs: true, removeComments: false });
         const containerSource = program.getSourceFile(containerFile);
 
-        const containerNodes = [];
+        let containerNodes: any = [];
 
         ts.forEachChild(containerSource, node => {
             containerNodes.push(node);
         });
 
         const importNodes = [];
+
+
+        importNodes.push(
+            ...[factory.createImportDeclaration(
+                undefined,
+                undefined,
+                factory.createImportClause(
+                    false,
+                    undefined,
+                    factory.createNamedImports([factory.createImportSpecifier(
+                        false,
+                        undefined,
+                        factory.createIdentifier('Container')
+                    )])
+                ),
+                factory.createStringLiteral('inversify'),
+                undefined
+            ),
+            factory.createImportDeclaration(
+                undefined,
+                undefined,
+                factory.createImportClause(
+                    false,
+                    factory.createIdentifier(this.product.testAreaName),
+                    undefined
+                ),
+                factory.createStringLiteral(getImportPath(this.product.containerConfig, this.product.testAreaConfig, false)),
+                undefined
+            ),
+            factory.createImportDeclaration(
+                undefined,
+                undefined,
+                factory.createImportClause(
+                    false,
+                    factory.createIdentifier(this.product.tagConfigName),
+                    undefined
+                ),
+                factory.createStringLiteral(getImportPath(this.product.containerConfig, this.product.tagConfig, false)),
+                undefined
+            )]
+        );
 
         if (isNew) {
             importNodes.push(factory.createImportDeclaration(
@@ -268,11 +312,13 @@ export class LogicModelGenerator extends GeneratorWithProduct {
                     false,
                     undefined,
                     factory.createNamedImports([factory.createImportSpecifier(
+                        false,
                         undefined,
-                        factory.createIdentifier(inheritName), null
+                        factory.createIdentifier(inheritName)
                     )])
                 ),
-                factory.createStringLiteral(getImportPath(containerFile, logicModel.inherits))
+                factory.createStringLiteral(getImportPath(containerFile, logicModel.inherits, false)),
+                undefined
             ));
         }
 
@@ -283,60 +329,105 @@ export class LogicModelGenerator extends GeneratorWithProduct {
                 false,
                 undefined,
                 factory.createNamedImports([factory.createImportSpecifier(
+                    false,
                     undefined,
-                    factory.createIdentifier(logicModel.name), null
+                    factory.createIdentifier(logicModel.name)
                 )])
             ),
-            factory.createStringLiteral(getImportPath(containerFile, logicModel.location))
+            factory.createStringLiteral(getImportPath(containerFile, logicModel.location, false)),
+            undefined
         ));
 
-        containerNodes.splice(0, 0, ...importNodes);
 
-        const configNode = factory.createExpressionStatement(factory.createCallExpression(
-            factory.createPropertyAccessExpression(
-                factory.createCallExpression(
-                    factory.createPropertyAccessExpression(
-                        factory.createCallExpression(
-                            factory.createPropertyAccessExpression(
-                                factory.createCallExpression(
-                                    factory.createPropertyAccessExpression(
-                                        factory.createIdentifier(this.product.containerName),
-                                        factory.createIdentifier('bind')
-                                    ),
-                                    [factory.createTypeReferenceNode(
-                                        factory.createIdentifier(logicModel.interfaceName),
-                                        undefined
-                                    )],
-                                    [factory.createPropertyAccessExpression(
-                                        factory.createIdentifier(this.product.testAreaName),
-                                        factory.createIdentifier(isNew ? logicModel.name : logicModel.inheritsName)
-                                    )]
-                                ),
-                                factory.createIdentifier('to')
-                            ),
+        this.product.logicModels.forEach(logicModel => {
+            importNodes.push(
+                ...[
+                    factory.createImportDeclaration(
+                        undefined,
+                        undefined,
+                        factory.createImportClause(
+                            false,
                             undefined,
-                            [factory.createIdentifier(logicModel.name)]
+                            factory.createNamedImports([factory.createImportSpecifier(
+                                false,
+                                undefined,
+                                factory.createIdentifier(logicModel.name)
+                            )])
                         ),
-                        factory.createIdentifier('inSingletonScope')
+                        factory.createStringLiteral(getImportPath(containerFile, logicModel.location, false)),
+                        undefined
                     ),
-                    undefined,
-                    []
-                ),
-                factory.createIdentifier('whenTargetTagged')
-            ),
-            undefined,
-            [
-                factory.createPropertyAccessExpression(
-                    factory.createIdentifier(this.product.tagConfigName),
-                    factory.createIdentifier('product')
-                ),
-                factory.createStringLiteral(isNew ? this.product.productName : `${this.product.productName}.${variant}`)
-            ]
-        ));
+                    factory.createImportDeclaration(
+                        undefined,
+                        undefined,
+                        factory.createImportClause(
+                            false,
+                            undefined,
+                            factory.createNamedImports([factory.createImportSpecifier(
+                                false,
+                                undefined,
+                                factory.createIdentifier(logicModel.inheritsName)
+                            )])
+                        ),
+                        factory.createStringLiteral(getImportPath(containerFile, logicModel.inherits, false)),
+                        undefined
+                    )
+                ]
+            );
+        });
 
+
+        const configNode =
+            factory.createExpressionStatement(factory.createCallExpression(
+                factory.createPropertyAccessExpression(
+                    factory.createCallExpression(
+                        factory.createPropertyAccessExpression(
+                            factory.createCallExpression(
+                                factory.createPropertyAccessExpression(
+                                    factory.createCallExpression(
+                                        factory.createPropertyAccessExpression(
+                                            factory.createIdentifier(this.product.containerName),
+                                            factory.createIdentifier('bind')
+                                        ),
+                                        [factory.createTypeReferenceNode(
+                                            factory.createIdentifier(logicModel.interfaceName),
+                                            undefined
+                                        )],
+                                        [factory.createPropertyAccessExpression(
+                                            factory.createIdentifier(this.product.testAreaName),
+                                            factory.createIdentifier(isNew ? logicModel.name : logicModel.inheritsName)
+                                        )]
+                                    ),
+                                    factory.createIdentifier('to')
+                                ),
+                                undefined,
+                                [factory.createIdentifier(logicModel.name)]
+                            ),
+                            factory.createIdentifier('inSingletonScope')
+                        ),
+                        undefined,
+                        []
+                    ),
+                    factory.createIdentifier('whenTargetTagged')
+                ),
+                undefined,
+                [
+                    factory.createPropertyAccessExpression(
+                        factory.createIdentifier(this.product.tagConfigName),
+                        factory.createIdentifier('product')
+                    ),
+                    factory.createStringLiteral(isNew ? this.product.productName : `${this.product.productName}.${variant}`)
+                ]
+            ));
+
+
+        containerNodes = containerNodes.filter(node => node.kind != 265 && node.kind != 266);
+        containerNodes.splice(0, 0, ...importNodes);
         containerNodes.splice(containerNodes.length - 2, 0, configNode);
-        const containerResultFile = ts.createSourceFile(path.resolve(this.product.testAreaConfig), '', ts.ScriptTarget.Latest, false, ts.ScriptKind.TS);
-        const containerResult = this.printer.printList(ts.ListFormat.MultiLine, <any>containerNodes, containerResultFile);
+
+        const containerResultFile = ts.createSourceFile(path.resolve(this.product.testAreaConfig), '', ts.ScriptTarget.ESNext, false, ts.ScriptKind.TS);
+        const containerResult = this.printer.printList(ts.ListFormat.MultiLineBlockStatements, containerNodes, containerResultFile);
+
         fs.writeFileSync(containerFile, eslint({
             text: containerResult, eslintConfig: eslintOpts, parser: 'typescript', filePath: containerFile, parserOptions: { project: [this.tslintPath] }
         }), { encoding: 'utf8' });
@@ -346,7 +437,7 @@ export class LogicModelGenerator extends GeneratorWithProduct {
         // update project config
         spinner = ora('Updating project configuration').start();
         this.product.logicModels.push(logicModel);
-        fs.writeFileSync(path.join(process.cwd(), 'src', 'config', 'project.json'), prettier.format(JSON.stringify(project), { parser: 'json' }));
+        fs.writeFileSync(path.join(process.cwd(), 'config', 'project.json'), prettier.format(JSON.stringify(project), { parser: 'json' }));
         spinner.succeed('Updated the project configuration');
 
     }

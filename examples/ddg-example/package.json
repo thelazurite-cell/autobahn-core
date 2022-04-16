@@ -1,0 +1,26 @@
+{
+  "name": "ddg-example",
+  "version": "0.4.0-alpha.18",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "gulp build",
+    "generate": "node -r esm ..\\..\\dist\\cli.js generate",
+    "test": "node -r esm ..\\..\\dist\\cli.js run -p duckduckgo -e qa",
+    "test:headless": "node -r esm ..\\..\\dist\\cli.js run -p duckduckgo -e qa -h -r xunit -s",
+    "clean": "gulp clean"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.19.0",
+    "@typescript-eslint/parser": "^5.19.0",
+    "@typescript-eslint/typescript-estree": "^5.19.0",
+    "testcafe": "^1.18.5",
+    "typescript": "^4.5.5",
+    "typescript-json-schema": "^0.53.0"
+  },
+  "esm": {
+    "sourceMap": false
+  }
+}

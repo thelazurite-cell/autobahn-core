@@ -1,0 +1,73 @@
+{
+  "cucumberProvider": "@cucumber/cucumber",
+  "browsers": [
+    { "name": "firefox", "command": "", "headlessCommand": "" },
+    {
+      "name": "chrome",
+      "command": " --allow-insecure-localhost --allow-running-insecure-content --start-maximized --enable-automation --disable-backgrounding-occluded-windows --disable-background-timer-throttling",
+      "headlessCommand": " --disable-web-security --allow-insecure-localhost --allow-running-insecure-content --enable-automation"
+    },
+    {
+      "name": "edge",
+      "command": " --allow-insecure-localhost --allow-running-insecure-content --start-maximized --enable-automation --disable-backgrounding-occluded-windows --disable-background-timer-throttling",
+      "headlessCommand": " --disable-web-security --allow-insecure-localhost --allow-running-insecure-content --enable-automation"
+    }
+  ],
+  "products": [
+    {
+      "productName": "duckduckgo",
+      "containerName": "DuckduckgoContainer",
+      "tagConfigName": "DuckduckgoTags",
+      "testAreaName": "DuckduckgoTestArea",
+      "containerConfig": "src\\products\\duckduckgo\\business-logic\\duckduckgo.config.ts",
+      "tagConfig": "src\\products\\duckduckgo\\business-logic\\duckduckgo-tags.config.ts",
+      "testAreaConfig": "src\\products\\duckduckgo\\business-logic\\duckduckgo-test-area.config.ts",
+      "baseLogicFolder": "src\\products\\duckduckgo\\business-logic",
+      "basePageObjectFolder": "src\\products\\duckduckgo\\page-object-models",
+      "baseSpecFolder": "src\\products\\duckduckgo\\specs",
+      "apiSpecFolder": "src\\products\\duckduckgo\\specs\\api",
+      "browserSpecFolder": "src\\products\\duckduckgo\\specs\\browser",
+      "baseStepFolder": "src\\products\\duckduckgo\\steps",
+      "apiStepFolder": "src\\products\\duckduckgo\\steps\\api",
+      "browserStepFolder": "src\\products\\duckduckgo\\steps\\browser",
+      "testAreas": [
+        {
+          "areaName": "search-page",
+          "pageObjectModels": [
+            "src\\products\\duckduckgo\\page-object-models\\search-page\\**\\*.ts"
+          ],
+          "specs": [
+            "src\\products\\duckduckgo\\specs\\browser\\search-page\\**\\*.spec.feature"
+          ],
+          "steps": [
+            "src\\products\\duckduckgo\\steps\\browser\\search-page\\**\\*.steps.ts"
+          ],
+          "sourceType": "browser"
+        }
+      ],
+      "logicModels": [
+        {
+          "testArea": "search-page",
+          "variant": "duckduckgo",
+          "name": "SearchLogic",
+          "inherits": "src\\products\\duckduckgo\\business-logic\\search-page\\search-logic.interface.ts",
+          "inheritsName": "ISearchLogic",
+          "interfaceName": "ISearchLogic",
+          "location": "src\\products\\duckduckgo\\business-logic\\search-page\\search-logic.business-model.ts"
+        }
+      ],
+      "variants": [],
+      "fallbackVariant": "duckduckgo",
+      "environments": ["qa"],
+      "appConfigFiles": ["config\\duckduckgo\\appConfig.duckduckgo.qa.json"],
+      "featureConfigFiles": [
+        "config\\duckduckgo\\featureTestConfig.duckduckgo.json"
+      ],
+      "baseConfigPath": "config\\duckduckgo",
+      "mockApiRequests": [],
+      "newmanCollectionPath": "src\\products\\duckduckgo\\newman-collections"
+    }
+  ],
+  "usesCertificates": true,
+  "ignoresRegistry": true
+}

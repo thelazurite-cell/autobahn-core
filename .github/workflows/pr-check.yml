@@ -2,7 +2,7 @@ name: PR Build
 
 on:
   pull_request:
-    branches: [main,develop]
+    branches: [main, develop]
 
 jobs:
   build:
@@ -24,9 +24,28 @@ jobs:
 
       - name: Setup GitVersion
         run: |
-          dotnet tool install --global GitVersion.Tool --version 5.*
+          dotnet tool install --global GitVersion.Tool --version 5.9.0
 
       - name: Build
         run: |
           npm install
           npm run ci
+
+      # - name: Test Example
+      #   working-directory: ./examples/ddg-example
+      #   run: |
+      #     npm run build
+      #     npm run test:headless
+
+      # - name: Move Report
+      #   run: npm run cleanExample
+
+      # - name: XUnit Viewer
+      #   id: xunit-viewer
+      #   uses: AutoModality/action-xunit-viewer@v1
+
+      # - name: Attach report
+      #   uses: actions/upload-artifact@v1
+      #   with:
+      #     name: "report.duckduckgo.qa.browser-chrome.xml"
+      #     path: "artifacts"
