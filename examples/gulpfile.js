@@ -132,25 +132,6 @@ function watch(cb) {
   });
 }
 
-function buildExample(cb) {
-  shell.cd("examples/ddg-examples");
-  shell.exec("npm run build", { silent: true });
-  cb();
-}
-function runExample(cb) {
-  shell.exec("npm run test:headless");
-  cb();
-}
-
-function cleanExample(cb) {
-  shell.mv(
-    "Reports/report.duckduckgo.qa.browser-chrome.xml",
-    "../../artifacts/report.duckduckgo.qa.browser-chrome.xml"
-  );
-  shell.rm("-r", "Reports/");
-  shell.exec("npm run clean");
-}
-
 function notify(title, msg) {
   var notifier = require("node-notifier");
 
@@ -172,7 +153,6 @@ exports.copyFiles = parallel(
   copyConfig
 );
 exports.build = series(clean, lint, buildTypescript, exports.copyFiles);
-exports.testExample = series(buildExample, runExample);
 exports.updateSchemas = updateSchemas;
 exports.ci = series(exports.build, exports.testExample, checkVersioning);
 exports.watchBuild = parallel(buildTypescript, exports.copyFiles, lint);
