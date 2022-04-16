@@ -1,0 +1,38 @@
+{
+  "ssl": true,
+  "testHost": "duckduckgo.com",
+  "applicationRoot": "/",
+  "details": {},
+  "dataConnections": {},
+  "frameworkConfig": {
+    "pageLoadTimeoutMs": 60000,
+    "pageRequestTimeout": 60000,
+    "ajaxTimeoutMs": 60000,
+    "defaultElementTimeoutMs": 5000,
+    "assertionTimeoutMs": 10000,
+    "mochaReporters": "spec",
+    "testcafeReporters": "spec",
+    "defaultBrowser": "chrome",
+    "parallelThreads": 1,
+    "testSpeed": 1,
+    "maxTestAttempts": 1,
+    "sources": [
+      {
+        "locations": [
+          "dist\\products\\duckduckgo\\specs\\api\\**\\*.spec.feature",
+          "dist\\products\\duckduckgo\\steps\\api\\**\\*.steps.js"
+        ],
+        "type": "api",
+        "useGherkin": true
+      },
+      {
+        "locations": [
+          "dist\\products\\duckduckgo\\specs\\browser\\**\\*.spec.feature",
+          "dist\\products\\duckduckgo\\steps\\browser\\**\\*.steps.js"
+        ],
+        "type": "browser",
+        "useGherkin": true
+      }
+    ]
+  }
+}

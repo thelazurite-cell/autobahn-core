@@ -1,0 +1,12 @@
+{
+  "testConfiguration": [
+    {
+      "tag": "Ignore",
+      "shouldRun": false,
+      "because": "The test has been marked as ignored. Plase make sure this should be the case."
+    }
+  ],
+  "applicationStrings": {},
+  "defaultAddress": {},
+  "acceptanceCriteria": { "acceptanceCriteriaItems": [] }
+}
