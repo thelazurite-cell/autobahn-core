@@ -31,12 +31,12 @@ jobs:
           npm install
           npm run ci
 
-      - name: XUnit Viewer
-        id: xunit-viewer
-        uses: AutoModality/action-xunit-viewer@v1
+      # - name: XUnit Viewer
+      #   id: xunit-viewer
+      #   uses: AutoModality/action-xunit-viewer@v1
 
-      - name: Attach report
-        uses: actions/upload-artifact@v1
-        with:
-          name: "report.duckduckgo.qa.browser-chrome.xml"
-          path: "artifacts"
+      # - name: Attach report
+      #   uses: actions/upload-artifact@v1
+      #   with:
+      #     name: "report.duckduckgo.qa.browser-chrome.xml"
+      #     path: "artifacts"
