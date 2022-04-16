@@ -16,7 +16,6 @@
     "@typescript-eslint/eslint-plugin": "^5.19.0",
     "@typescript-eslint/parser": "^5.19.0",
     "@typescript-eslint/typescript-estree": "^5.19.0",
-    "autobahn-core": "^0.4.0-alpha.18",
     "testcafe": "^1.18.5",
     "typescript": "^4.5.5",
     "typescript-json-schema": "^0.53.0"
