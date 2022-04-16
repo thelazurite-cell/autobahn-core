@@ -16,6 +16,8 @@ The main goal is to provide a structured folder structure & make it easier to im
 First add the dependency to your project
 `npm i autobahn-core`
 
+make sure you are running with typescript version 4.5.5
+
 in the scripts property of your `package.json` file add the following:
 
 ```json
@@ -24,7 +26,7 @@ in the scripts property of your `package.json` file add the following:
 
 Then run the script (`npm run generate`). On the first run it will ask you to create a project config file. Doing this will also generate the basic folder structure.
 
-After that generate your first project config :)
+After that generate your first project config :) Also feel free to check out the [Examples](https://github.com/thelazurite-cell/autobahn-core/tree/main/examples) folder to get a head start.
 
 # Using the framework:
 
