@@ -23,19 +23,18 @@ export function getImportPath(thisLocation: string, importLocation: string, isPa
     const splitLocation = thisLocation.split(backwardsSlash ? '\\' : '/');
     splitLocation.pop();
 
-    if (!isPackage) {
-        const sourceFile = resolve(join(...splitLocation));
-        let importPath = relative(
-            sourceFile,
-            resolve(importLocation).replace('.ts', '')
-        ).replace(/\\/g, '/');
+    const sourceFile = resolve(join(...splitLocation));
+    const extensionRemoved = importLocation.replace('.ts', '');
+    let importPath = isPackage ? extensionRemoved.replace(/\\/g, '/') : relative(
+        sourceFile,
+        resolve(extensionRemoved)
+    ).replace(/\\/g, '/');
 
+    if (!isPackage) {
         if (!importPath.startsWith('./') && !importPath.startsWith('../')) {
             importPath = `./${importPath}`;
         }
-
-        return importPath;
     }
 
-    return importLocation;
+    return importPath;
 }

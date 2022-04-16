@@ -108,12 +108,14 @@ export class PageObjectModelGenerator extends GeneratorWithProduct {
                     undefined,
                     factory.createNamedImports([
                         factory.createImportSpecifier(
+                            false,
                             undefined,
-                            factory.createIdentifier('$'), null
+                            factory.createIdentifier('$')
                         ),
                         factory.createImportSpecifier(
+                            false,
                             undefined,
-                            factory.createIdentifier('Locator'), null
+                            factory.createIdentifier('Locator')
                         )
                     ])
                 ),
@@ -126,8 +128,9 @@ export class PageObjectModelGenerator extends GeneratorWithProduct {
                     false,
                     undefined,
                     factory.createNamedImports([factory.createImportSpecifier(
+                        false,
                         undefined,
-                        factory.createIdentifier('LocatorType'), null
+                        factory.createIdentifier('LocatorType')
                     )])
                 ),
                 factory.createStringLiteral(getImportPath(filePath, path.join(...GeneratorCli.importRoot, 'framework', 'driver', 'locators', 'locator-type.ts')))
@@ -139,8 +142,9 @@ export class PageObjectModelGenerator extends GeneratorWithProduct {
                     false,
                     undefined,
                     factory.createNamedImports([factory.createImportSpecifier(
+                        false,
                         undefined,
-                        factory.createIdentifier('PageObjectModel'), null
+                        factory.createIdentifier('PageObjectModel')
                     )])
                 ),
                 factory.createStringLiteral(getImportPath(filePath, path.join(...GeneratorCli.importRoot, 'framework', 'driver', 'page-object-model.ts')))
