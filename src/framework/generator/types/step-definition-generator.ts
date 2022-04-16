@@ -19,7 +19,7 @@ import inquirer from 'inquirer';
 import fuzzy from 'fuzzy';
 import ora from 'ora';
 import fs from 'fs';
-import path from 'path';
+import path, { join } from 'path';
 import boxen from 'boxen';
 import ts from 'typescript';
 import eslintOpts from '../../../../.eslintrc';
@@ -71,15 +71,26 @@ export class StepDefinitionsGenerator extends GeneratorWithProduct {
 
         const compiledSteps = [];
         Configuration.application.frameworkConfig.sources.map(itm => itm.locations)
-            .forEach(itm => compiledSteps.push(
-                ...GlobReader.getTestFiles(
-                    itm.filter(
-                        val => val.toLowerCase().endsWith('.steps.js')
-                    )
-                ))
+            .forEach(itm => {
+                const fullGlob = itm.map(itm => join(process.cwd(), itm));
+                console.log(fullGlob);
+                compiledSteps.push(
+                    ...GlobReader.getTestFiles(
+                        fullGlob.filter(
+                            val => val.toLowerCase().endsWith('.steps.js')
+                        )
+                    ));
+
+                console.log(compiledSteps);
+            }
             );
 
-        this.specs = GlobReader.getTestFiles(area.specs);
+        const specs = area.specs.map(itm => path.join(process.cwd(), itm));
+
+        this.specs = GlobReader.getTestFiles(specs);
+
+        console.log(this.specs);
+
         this.gherkinBehavior = new GherkinProcessor(this.specs, compiledSteps);
         let outputFiles = null;
         while (!outputFiles || outputFiles?.length === 0) {
@@ -246,8 +257,9 @@ export class StepDefinitionsGenerator extends GeneratorWithProduct {
                                 false,
                                 undefined,
                                 factory.createNamedImports([factory.createImportSpecifier(
+                                    false,
                                     undefined,
-                                    factory.createIdentifier('MochaController'), null
+                                    factory.createIdentifier('MochaController')
                                 )])
                             ),
                             //   factory.createStringLiteral("../../../../framework/gherkin/mocha/mocha-controller")
@@ -292,7 +304,7 @@ export class StepDefinitionsGenerator extends GeneratorWithProduct {
                     stepType = this.getPreferredStepType(line, stepType);
                     const arrayParameters = [];
                     for (let i = 0; i < parameters.length; i++) {
-                        arrayParameters.push(ts.factory.createBindingElement(undefined, undefined, `p${i}`, undefined));
+                        arrayParameters.push(ts.factory.createBindingElement(undefined, undefined, ts.factory.createIdentifier(`p${i}`), undefined));
                     }
 
                     sourceNodes.push(this.generateStep(stepType, regex, hasParameters, arrayParameters, area));
@@ -324,18 +336,22 @@ export class StepDefinitionsGenerator extends GeneratorWithProduct {
                 ts.factory.createArrowFunction(
                     [ts.factory.createModifier(ts.SyntaxKind.AsyncKeyword)],
                     undefined,
-                    hasParameters ? [
-                        this.testControllerParam(area),
-                        ts.factory.createParameterDeclaration(
-                            undefined,
-                            undefined,
-                            undefined,
-                            ts.factory.createArrayBindingPattern(arrayParameters),
-                            undefined,
-                            undefined,
-                            undefined
-                        )
-                    ] : [this.testControllerParam(area)],
+                    hasParameters ?
+                        [
+                            ts.factory.createParameterDeclaration(
+                                undefined,
+                                undefined,
+                                undefined,
+                                ts.factory.createArrayBindingPattern([
+                                    ...arrayParameters
+                                ]),
+                                undefined,
+                                undefined,
+                                undefined
+                            ),
+                            this.testControllerParam(area)
+                        ]
+                        : [this.testControllerParam(area)],
                     undefined,
                     ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
                     ts.factory.createBlock(
@@ -351,7 +367,8 @@ export class StepDefinitionsGenerator extends GeneratorWithProduct {
                     )
                 )
             ]
-        ));
+        )
+        );
     }
 
     private testControllerParam(area: TestArea): ts.ParameterDeclaration {
@@ -377,13 +394,13 @@ export class StepDefinitionsGenerator extends GeneratorWithProduct {
                 false,
                 undefined,
                 ts.factory.createNamedImports([
-                    ts.factory.createImportSpecifier(undefined, ts.factory.createIdentifier('Given'), null),
-                    ts.factory.createImportSpecifier(undefined, ts.factory.createIdentifier('When'), null),
-                    ts.factory.createImportSpecifier(undefined, ts.factory.createIdentifier('Then'), null)
+                    ts.factory.createImportSpecifier(false, undefined, ts.factory.createIdentifier('Given')),
+                    ts.factory.createImportSpecifier(false, undefined, ts.factory.createIdentifier('When')),
+                    ts.factory.createImportSpecifier(false, undefined, ts.factory.createIdentifier('Then'))
                 ])
             ),
-            ts.factory.createStringLiteral(this.project.cucumberProvider), null
-
+            ts.factory.createStringLiteral(this.project.cucumberProvider),
+            undefined
         );
 
         return node;
@@ -397,12 +414,13 @@ export class StepDefinitionsGenerator extends GeneratorWithProduct {
                 false,
                 undefined,
                 ts.factory.createNamedImports([
-                    ts.factory.createImportSpecifier(undefined, ts.factory.createIdentifier('Given'), null),
-                    ts.factory.createImportSpecifier(undefined, ts.factory.createIdentifier('When'), null),
-                    ts.factory.createImportSpecifier(undefined, ts.factory.createIdentifier('Then'), null)
+                    ts.factory.createImportSpecifier(false, undefined, ts.factory.createIdentifier('Given')),
+                    ts.factory.createImportSpecifier(false, undefined, ts.factory.createIdentifier('When')),
+                    ts.factory.createImportSpecifier(false, undefined, ts.factory.createIdentifier('Then'))
                 ])
             ),
-            ts.factory.createStringLiteral(this.project.cucumberProvider)
+            ts.factory.createStringLiteral(this.project.cucumberProvider),
+            undefined
         );
     }
 

@@ -16,7 +16,7 @@ The main goal is to provide a structured folder structure & make it easier to im
 First add the dependency to your project
 `npm i autobahn-core`
 
-make sure you are running with typescript version 4.5.5
+make sure you are running with typescript version >=4.5.5
 
 in the scripts property of your `package.json` file add the following:
 

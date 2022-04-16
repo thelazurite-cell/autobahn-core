@@ -19,7 +19,11 @@
     "declarationMap": false,
     "sourceMap": false,
     "outDir": "./dist",
-    "allowJs": true
+    "allowJs": true,
+    "types":[
+      "testcafe",
+      "long"
+    ]
   },
   "include": [
     "src/**/*"

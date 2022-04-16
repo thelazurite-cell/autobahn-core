@@ -28,7 +28,7 @@ export class FeatureGenerator extends GeneratorWithProduct {
         const featureFileName = await this.getFeatureFileName(testArea);
         const description = await this.getFeatureDescription();
 
-        const templatePath = path.resolve(path.join('src', 'framework', 'generator', 'templates', 'template.feature'));
+        const templatePath = path.resolve(path.join(__dirname, '..', 'templates', 'template.feature'));
         let featureText = fs.readFileSync(templatePath, { encoding: 'utf8' });
         featureText = featureText.replace('{{featureTitle}}', description.featureTitle)
             .replace('{{roleOrPerson}}', description.roleOrPerson)

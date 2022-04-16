@@ -79,7 +79,7 @@ function cleanForPublish(cb) {
 }
 
 function copyFeatureFiles() {
-  return gulp.src("./src/**/specs/**/*.feature").pipe(gulp.dest("./dist/"));
+  return gulp.src("./src/**/*.feature").pipe(gulp.dest("./dist/"));
 }
 
 function copyResourceFiles() {
