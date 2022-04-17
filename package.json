@@ -12,7 +12,9 @@
     "ci": "gulp ci",
     "watch:build": "gulp watch",
     "watch": "nodemon --exec npm run watch:build --watch src -e js,mjs,json,feature,ts",
-    "cleanExample": "gulp cleanExample"
+    "example:build": "cd examples/ddg-example && gulp build",
+    "example:run": "cd examples/ddg-example && node -r esm ../../dist/cli.js run -p duckduckgo -e qa -h -r xunit -s",
+    "example:clean": "gulp cleanExample"
   },
   "esm": {
     "sourceMap": false

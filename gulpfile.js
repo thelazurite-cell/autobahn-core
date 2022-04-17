@@ -164,8 +164,6 @@ function watch(cb) {
 }
 
 function buildExample(cb) {
-  shell.cd(".\\examples");
-  shell.cd(".\\ddg-example");
   shell.exec("npm run build", { silent: true });
   cb();
 }
@@ -182,6 +180,8 @@ const getDirectories = (source) =>
     .map((itm) => itm.name);
 
 function cleanExample(cb) {
+  shell.cd("./examples");
+  shell.cd("./ddg-example");
   shell.cd("./Reports");
   const nextDir = getDirectories(process.cwd()).pop();
   const artifactsDir = "../../../../artifacts/";
@@ -225,7 +225,6 @@ exports.ci = series(
   exports.build,
   test,
   exports.copyFiles,
-  exports.testExample,
   cleanForPublish,
   checkVersioning,
   updateSchemas

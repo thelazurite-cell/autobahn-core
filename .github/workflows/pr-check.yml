@@ -32,6 +32,12 @@ jobs:
           npm install
           npm run ci
 
+      - name: Test Example
+        run: |
+          npm run example:build
+          npm run example:run
+          npm run example:clean
+
       - name: XUnit Viewer
         id: xunit-viewer
         uses: AutoModality/action-xunit-viewer@v1
