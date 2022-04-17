@@ -25,6 +25,7 @@ jobs:
       - name: Setup GitVersion
         run: |
           dotnet tool install --global GitVersion.Tool --version 5.9.0
+          npx -v
 
       - name: Build
         run: |
