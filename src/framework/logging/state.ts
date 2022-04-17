@@ -64,7 +64,7 @@ export class State {
      * can live
      */
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    public static logoutFunction: (t: any) => void = function (t: any) { return; }
+    public static logoutFunction: (t: any) => void = function (t: any) { return; };
 
     /**
      * The current platform the test framework is running on

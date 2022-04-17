@@ -64,7 +64,7 @@ export class TestRunner {
         } catch (e) {
             console.log(`Could not read the project file. Check it exists in: ${path}`);
         }
-    }
+    };
 
     constructor(args: FrameworkArguments) {
         this.args = args;

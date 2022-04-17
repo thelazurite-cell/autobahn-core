@@ -6,7 +6,7 @@ const gulp = require("gulp");
 const shell = require("shelljs");
 const ts = require("gulp-typescript");
 const sourcemaps = require("gulp-sourcemaps");
-const eslint = require("gulp-eslint7");
+const eslint = require("gulp-eslint-new");
 const { programFromConfig, buildGenerator } = require("typescript-json-schema");
 
 function lint() {
