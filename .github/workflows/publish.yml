@@ -1,4 +1,4 @@
-name: Build & Publish
+name: "Release"
 
 on:
   push:
@@ -30,6 +30,19 @@ jobs:
         run: |
           npm install
           npm run ci
+
+      - name: Test Example
+        run: |
+          npm run example:build
+          npm run example:run
+          npm run example:clean
+
+      - name: Save Test Report
+        uses: actions/upload-artifact@v2 # upload test results
+        if: success() || failure() # run this step even if previous step failed
+        with:
+          name: test-results
+          path: artifacts/report.duckduckgo.qa.browser-chrome.xml
 
       - name: Publish
         uses: JS-DevTools/npm-publish@v1

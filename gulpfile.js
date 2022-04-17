@@ -164,8 +164,6 @@ function watch(cb) {
 }
 
 function buildExample(cb) {
-  shell.cd(".\\examples");
-  shell.cd(".\\ddg-example");
   shell.exec("npm run build", { silent: true });
   cb();
 }
@@ -175,9 +173,23 @@ function runExample(cb) {
   cb();
 }
 
+const getDirectories = (source) =>
+  fs
+    .readdirSync(source, { withFileTypes: true })
+    .filter((itm) => itm.isDirectory())
+    .map((itm) => itm.name);
+
 function cleanExample(cb) {
+  shell.cd("./examples");
+  shell.cd("./ddg-example");
   shell.cd("./Reports");
-  shell.mv("*", "../../../artifacts/");
+  const nextDir = getDirectories(process.cwd()).pop();
+  const artifactsDir = "../../../../artifacts/";
+
+  shell.cd(`./${nextDir}`);
+  shell.mkdir(artifactsDir);
+  shell.mv("*", artifactsDir);
+  shell.cd("..");
   shell.cd("..");
   shell.rm("-r", "Reports/");
   shell.exec("npm run clean", { silent: true });
