@@ -36,7 +36,7 @@ jobs:
         run: |
           npm run example:build
           npm run example:run
-          npm run example:clean
+          gulp cleanExample
 
       - name: Save Test Report
         uses: actions/upload-artifact@v2 # upload test results
