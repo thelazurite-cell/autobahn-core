@@ -6,20 +6,7 @@ const gulp = require("gulp");
 const shell = require("shelljs");
 const ts = require("gulp-typescript");
 const sourcemaps = require("gulp-sourcemaps");
-const eslint = require("gulp-eslint-new");
 const { programFromConfig, buildGenerator } = require("typescript-json-schema");
-
-function lint() {
-  return gulp
-    .src("./src/**/*.ts")
-    .pipe(
-      eslint({
-        useEslintrc: true,
-      })
-    )
-    .pipe(eslint.format())
-    .pipe(eslint.failAfterError());
-}
 
 function clean(cb) {
   shell.rm("-rf", ["./dist"]);
@@ -152,7 +139,7 @@ exports.copyFiles = parallel(
   copyResourceFiles,
   copyConfig
 );
-exports.build = series(clean, lint, buildTypescript, exports.copyFiles);
+exports.build = series(clean, buildTypescript, exports.copyFiles);
 exports.updateSchemas = updateSchemas;
 exports.ci = series(exports.build, exports.testExample, checkVersioning);
 exports.watchBuild = parallel(buildTypescript, exports.copyFiles, lint);

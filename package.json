@@ -1,6 +1,6 @@
 {
   "name": "autobahn-core",
-  "version": "0.1.15--7-fix-deps.1",
+  "version": "0.1.15--7-fix-deps.3",
   "description": "A testing framework for creating API & Browser tests",
   "main": "./dist/program.js",
   "module": "./dist/program.js",
@@ -54,6 +54,9 @@
   ],
   "bin": {
     "autobahn": "./dist/program.js"
+  },
+  "engines": {
+    "node": ">=14.17.0"
   },
   "dependencies": {
     "@babel/core": "^7.17.9",
@@ -129,7 +132,7 @@
     "@types/minimist": "^1.2.1",
     "@types/mssql": "^6.0.0",
     "@types/newman": "^5.1.4",
-    "@types/node": "^13.7.1",
+    "@types/node": ">=14.14.20",
     "@types/prettier": "^2.2.3",
     "@types/readline-sync": "^1.4.3",
     "@types/reflect-metadata": "^0.1.0",
