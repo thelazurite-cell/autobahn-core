@@ -30,7 +30,7 @@ jobs:
       - name: Build
         run: |
           npm install
-          npm run ci
+          gulp ci
 
       - name: Test Example
         run: |
