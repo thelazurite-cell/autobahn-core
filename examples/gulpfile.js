@@ -130,7 +130,6 @@ function notify(title, msg) {
   });
 }
 
-exports.lint = lint;
 exports.cleanReports = cleanReportsFolder;
 exports.clean = clean;
 exports.copyFiles = parallel(
@@ -142,6 +141,6 @@ exports.copyFiles = parallel(
 exports.build = series(clean, buildTypescript, exports.copyFiles);
 exports.updateSchemas = updateSchemas;
 exports.ci = series(exports.build, exports.testExample, checkVersioning);
-exports.watchBuild = parallel(buildTypescript, exports.copyFiles, lint);
+exports.watchBuild = parallel(buildTypescript, exports.copyFiles);
 exports.watch = watch;
 exports.default = exports.build;
