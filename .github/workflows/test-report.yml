@@ -1,7 +1,7 @@
 name: "Test Report"
 on:
   workflow_run:
-    workflows: ["PR Build"] # runs after CI workflow
+    workflows: ["PR Build", "Release"]
     types:
       - completed
 
