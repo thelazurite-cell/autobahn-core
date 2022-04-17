@@ -446,6 +446,11 @@ export class TestRunner {
     public static getReportFileName(type: string, reportType: string): string {
         let reportExtension = '';
         switch (reportType.toLowerCase()) {
+            case 'junit': {
+                reportExtension = '.xml';
+                break;
+            }
+
             case 'xunit': {
                 reportExtension = '.xml';
                 break;

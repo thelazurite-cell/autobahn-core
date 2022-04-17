@@ -1,6 +1,6 @@
 {
   "name": "autobahn-core",
-  "version": "0.1.15--7-fix-deps.3",
+  "version": "0.1.15--7-fix-deps.6",
   "description": "A testing framework for creating API & Browser tests",
   "main": "./dist/program.js",
   "module": "./dist/program.js",
@@ -13,7 +13,7 @@
     "watch:build": "gulp watch",
     "watch": "nodemon --exec npm run watch:build --watch src -e js,mjs,json,feature,ts",
     "example:build": "cd examples/ddg-example && gulp build",
-    "example:run": "cd examples/ddg-example && node -r esm ../../dist/cli.js run -p duckduckgo -e qa -h -r xunit -s",
+    "example:run": "cd examples/ddg-example && node -r esm ../../dist/cli.js run -p duckduckgo -e qa -h -r junit -s",
     "example:clean": "gulp cleanExample"
   },
   "esm": {
@@ -116,6 +116,7 @@
     "supertest": "^6.2.2",
     "testcafe": "^1.18.2",
     "testcafe-reporter-cucumber-json": "^6.3.0",
+    "testcafe-reporter-junit": "^3.0.2",
     "tweetnacl-util": "^0.15.1",
     "windows-registry-napi": "^0.1.6",
     "yargs": "^16.2.0"

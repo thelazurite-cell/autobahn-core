@@ -7,7 +7,7 @@
     "build": "gulp build",
     "generate": "node -r esm ..\\..\\dist\\cli.js generate",
     "test": "node -r esm ..\\..\\dist\\cli.js run -p duckduckgo -e qa",
-    "test:headless": "node -r esm ..\\..\\dist\\cli.js run -p duckduckgo -e qa -h -r xunit -s",
+    "test:headless": "node -r esm ..\\..\\dist\\cli.js run -p duckduckgo -e qa -h -r junit -s",
     "clean": "gulp clean"
   },
   "author": "",
