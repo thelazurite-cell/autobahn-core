@@ -40,7 +40,7 @@ bower_components
 
 # Compiled binary addons (https://nodejs.org/api/addons.html)
 build/Release
-**/artifacts/
+# **/artifacts/
 **/screenshots/
 # Dependency directories
 node_modules/
@@ -50,7 +50,7 @@ jspm_packages/
 # Output Folder
 **/Reports/**/*
 **/dist/**/*
-artifacts/**/*
+# artifacts/**/*
 
 # TypeScript v1 declaration files
 typings/

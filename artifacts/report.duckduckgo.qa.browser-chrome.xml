@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites name="Testcafe Tests">
+  <testsuite name="Chrome 100.0.4896.127 / Windows 10" tests="1" failures="0" skipped="0" errors="0" time="10.508" timestamp="Sun, 17 Apr 2022 22:12:28 GMT" >
+    <testcase classname="Feature: DDG Landing Page" name="Scenario: Typing example into the search page" time="9.619">
+    </testcase>
+  </testsuite>
+</testsuites>

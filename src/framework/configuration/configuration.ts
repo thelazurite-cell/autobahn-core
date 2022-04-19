@@ -398,9 +398,9 @@ export class Configuration {
      * @param [encoding] the encoding of the provided file
      * @returns the javascript object
      */
-    private static readFile(fileName: string, encoding = 'utf8') {
+    private static readFile(fileName: string, encoding: BufferEncoding = 'utf8') {
         if (fs.existsSync(fileName)) {
-            const res = readFileSync(fileName, encoding);
+            const res = readFileSync(fileName, { encoding });
             try {
                 return JSON.parse(res);
             } catch (e) {

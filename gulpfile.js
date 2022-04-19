@@ -1,13 +1,13 @@
 /* eslint-disable no-undef */
 const { resolve, join } = require("path");
-const { series, parallel } = require("gulp");
+const { series, parallel, src } = require("gulp");
 const fs = require("fs");
 const path = require("path");
 const gulp = require("gulp");
 const shell = require("shelljs");
 const ts = require("gulp-typescript");
 const sourcemaps = require("gulp-sourcemaps");
-const eslint = require("gulp-eslint7");
+const eslint = require("gulp-eslint-new");
 const mocha = require("gulp-mocha");
 const { programFromConfig, buildGenerator } = require("typescript-json-schema");
 
