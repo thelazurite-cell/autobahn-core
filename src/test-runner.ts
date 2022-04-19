@@ -451,6 +451,11 @@ export class TestRunner {
                 break;
             }
 
+            case 'jest': {
+                reportExtension = '.xml';
+                break;
+            }
+
             case 'xunit': {
                 reportExtension = '.xml';
                 break;

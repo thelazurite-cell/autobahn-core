@@ -182,19 +182,19 @@ const getDirectories = (source) =>
 function cleanExample(cb) {
   shell.cd("./examples");
   shell.cd("./ddg-example");
-  // shell.cd("./Reports");
-  // const nextDir = getDirectories(process.cwd()).pop();
-  // const artifactsDir = "../../../../artifacts/";
+  shell.cd("./Reports");
+  const nextDir = getDirectories(process.cwd()).pop();
+  const artifactsDir = "../../../../artifacts/";
 
-  // shell.cd(`./${nextDir}`);
-  // shell.mkdir(artifactsDir);
-  // shell.mv("*", artifactsDir);
-  // shell.cd("..");
-  // shell.cd("..");
+  shell.cd(`./${nextDir}`);
+  shell.mkdir(artifactsDir);
+  shell.mv("*", artifactsDir);
+  shell.cd("..");
+  shell.cd("..");
   shell.rm("-r", "Reports/");
   shell.exec("npm run clean", { silent: true });
-  // shell.cd("..");
-  // shell.cd("..");
+  shell.cd("..");
+  shell.cd("..");
   cb();
 }
 
