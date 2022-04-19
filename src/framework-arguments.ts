@@ -90,5 +90,5 @@ export class FrameworkArguments {
     /**
      * override the amount of parallel threads to use 
      */
-    pt?: number
+    pt?: number;
 }

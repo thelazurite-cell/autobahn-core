@@ -64,7 +64,7 @@ export class TestRunner {
         } catch (e) {
             console.log(`Could not read the project file. Check it exists in: ${path}`);
         }
-    }
+    };
 
     constructor(args: FrameworkArguments) {
         this.args = args;
@@ -446,6 +446,16 @@ export class TestRunner {
     public static getReportFileName(type: string, reportType: string): string {
         let reportExtension = '';
         switch (reportType.toLowerCase()) {
+            case 'junit': {
+                reportExtension = '.xml';
+                break;
+            }
+
+            case 'jest': {
+                reportExtension = '.xml';
+                break;
+            }
+
             case 'xunit': {
                 reportExtension = '.xml';
                 break;

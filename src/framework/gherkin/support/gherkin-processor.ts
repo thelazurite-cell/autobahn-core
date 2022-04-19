@@ -23,7 +23,7 @@ import TestRunHookDefinition from '@cucumber/cucumber/lib/models/test_run_hook_d
 export class GherkinProcessor {
     public readonly compiler: IGherkinCompiler;
     private readonly parameterRegistryArg: string = '--param-type-registry-file';
-    private readonly andSeparator = ' and '
+    private readonly andSeparator = ' and ';
 
     private readonly parameterRegistry: ParameterTypeRegistry;
     public stepDefinitions: StepDefinition[] = [];
