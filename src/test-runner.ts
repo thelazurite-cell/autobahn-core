@@ -35,7 +35,7 @@ export class TestRunner {
 
     private static readonly reportsFolderBase: string = 'Reports/';
 
-    public static reportsFolder = `${TestRunner.reportsFolderBase ?? 'Reports/'}${moment().utc().format('YYYY-MM-DD_HH-mm-ss')}`;
+    public static reportsFolder = `${TestRunner.reportsFolderBase ?? 'Reports/'}${moment().utc().format('YYYY-MM-DD_HH-mm')}`;
 
     public reportsFolder: string;
 
@@ -54,7 +54,7 @@ export class TestRunner {
 
     public runner: Runner;
 
-    public project: Project = new Project();
+    public static project: Project = new Project();
 
     public static readProjectFile = () => {
         const path = join(process.cwd(), 'config', 'project.json');
@@ -75,8 +75,8 @@ export class TestRunner {
         this.mocha = FrameworkContainer.getTagged<MochaCompiler>(FrameworkFunctionality.MochaApi, FrameworkTags.useGherkin, useGherkin ?? true);
         const projectText = TestRunner.readProjectFile();
 
-        Object.assign(this.project, projectText);
-        Configuration.ignoresRegistry = this.project.ignoresRegistry;
+        Object.assign(TestRunner.project, projectText);
+        Configuration.ignoresRegistry = TestRunner.project.ignoresRegistry;
     }
 
     /**
@@ -100,7 +100,7 @@ export class TestRunner {
      * Attempts to apply the expected ssl settings.
      */
     public attemptApplyingSslSettings(): void {
-        if (this.project.usesCertificates) {
+        if (TestRunner.project.usesCertificates) {
             const selfSigned = require('openssl-self-signed-certificate');
 
             this.sslOptions = {
@@ -296,7 +296,7 @@ export class TestRunner {
 
         const port = await State.getPort();
         const alternatePort = await State.getPort();
-        return createInstance('localhost', port, alternatePort, this.project.usesCertificates ? this.sslOptions : null);//.retryTestPages();
+        return createInstance('localhost', port, alternatePort, TestRunner.project.usesCertificates ? this.sslOptions : null);//.retryTestPages();
     }
 
     /**
@@ -316,7 +316,7 @@ export class TestRunner {
      * @returns browser the browser command to be used by testcafe
      */
     public async getBrowser(thisBrowser: string): Promise<string> {
-        const match = this.project.browsers.filter(itm => itm.name.toLowerCase() === thisBrowser.toLowerCase());
+        const match = TestRunner.project.browsers.filter(itm => itm.name.toLowerCase() === thisBrowser.toLowerCase());
         const isHeadless = this.args.headless;
         let browserStr = isHeadless ? `${thisBrowser}:headless` : thisBrowser;
 
@@ -444,34 +444,30 @@ export class TestRunner {
      * @returns report file name 
      */
     public static getReportFileName(type: string, reportType: string): string {
-        let reportExtension = '';
-        switch (reportType.toLowerCase()) {
-            case 'junit': {
-                reportExtension = '.xml';
-                break;
+        const replacables = {
+            'product': Configuration.product,
+            'environment': Configuration.environment,
+            'sourceType': type
+        };
+
+        const reportConfig = TestRunner.project.reporting.types.filter(itm => itm.name === reportType).pop();
+
+        let reportName = TestRunner.project.reporting.defaultFileNamePattern;
+        let reportExtension = TestRunner.project.reporting.defaultExtension;
+
+        if (reportConfig) {
+            if (reportConfig.extension) {
+                reportExtension = reportConfig.extension;
             }
 
-            case 'jest': {
-                reportExtension = '.xml';
-                break;
-            }
-
-            case 'xunit': {
-                reportExtension = '.xml';
-                break;
-            }
-
-            case 'cucumber-json': {
-                return null;
-            }
-
-            default: {
-                reportExtension = '.txt';
-                break;
+            if (reportConfig.fileNamePattern) {
+                reportName = reportConfig.fileNamePattern;
             }
         }
 
-        return `${TestRunner.reportsFolder}/report.${Configuration.product}.${Configuration.environment}.${type}${reportExtension}`;
+        Object.keys(replacables).forEach(itm => reportName = reportName.replace(new RegExp(`\\[${itm}\\]`, 'ig'), replacables[itm]));
+
+        return join(process.cwd(), TestRunner.project.reporting.outputFolder, `${reportName}.${reportExtension}`);
     }
 
     /**
@@ -479,7 +475,7 @@ export class TestRunner {
      * @param browserStr the name of the browser that was initialized
      */
     public completeInit(browserStr: string): void {
-        const initReportsDirectory = `./${TestRunner.reportsFolder}/init`;
+        const initReportsDirectory = join(process.cwd(), TestRunner.project.reporting.outputFolder, 'init');
         const initReportFileName = `${this.getDateFormat()}_init_${browserStr}`;
 
         State.saveLogFile(initReportsDirectory, initReportFileName, '.txt').catch((reason) => {
