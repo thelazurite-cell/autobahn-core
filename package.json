@@ -1,6 +1,6 @@
 {
   "name": "autobahn-core",
-  "version": "0.1.15--7-fix-deps.8",
+  "version": "0.1.17--14-configurable-reporting.1",
   "description": "A testing framework for creating API & Browser tests",
   "main": "./dist/program.js",
   "module": "./dist/program.js",
