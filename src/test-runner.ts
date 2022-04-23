@@ -33,9 +33,7 @@ import { join, resolve } from 'path';
 export class TestRunner {
     private startedAt: string;
 
-    private static readonly reportsFolderBase: string = 'Reports/';
-
-    public static reportsFolder = `${TestRunner.reportsFolderBase ?? 'Reports/'}${moment().utc().format('YYYY-MM-DD_HH-mm')}`;
+    public static reportsFolder = 'Reports/';
 
     public reportsFolder: string;
 
@@ -77,6 +75,7 @@ export class TestRunner {
 
         Object.assign(TestRunner.project, projectText);
         Configuration.ignoresRegistry = TestRunner.project.ignoresRegistry;
+        TestRunner.reportsFolder = TestRunner.project.reporting.outputFolder;
     }
 
     /**
@@ -146,6 +145,7 @@ export class TestRunner {
     }
 
     private configureReports() {
+        TestRunner.reportsFolder = TestRunner.replaceReportFolderVars(TestRunner.reportsFolder);
         State.createMissingDirectories(resolve(`./${TestRunner.reportsFolder}`));
         if (this.args.browserReports) {
             Configuration.application.frameworkConfig.testcafeReporters = this.args.browserReports;
@@ -373,12 +373,12 @@ export class TestRunner {
         this.runner
             .src(allLocations).tags(tags)
             .browsers(browserStr)
-            .video(`${TestRunner.reportsFolder}/videos/`, {
+            .video(resolve(join(process.cwd(), `${TestRunner.reportsFolder}/videos/`)), {
                 singleFile: false,
                 failedOnly: true
             })
             .screenshots({
-                path: `${TestRunner.reportsFolder}/screenshots/`,
+                path: resolve(join(process.cwd(), `${TestRunner.reportsFolder}/screenshots/`)),
                 takeOnFails: true,
                 fullPage: false
 
@@ -440,16 +440,10 @@ export class TestRunner {
 
     /**
      * Gets the report file name for the current product and type
-     * @param type the type of tests being run
+     * @param sourceType the type of tests being run
      * @returns report file name 
      */
-    public static getReportFileName(type: string, reportType: string): string {
-        const replacables = {
-            'product': Configuration.product,
-            'environment': Configuration.environment,
-            'sourceType': type
-        };
-
+    public static getReportFileName(sourceType: string, reportType: string): string {
         const reportConfig = TestRunner.project.reporting.types.filter(itm => itm.name === reportType).pop();
 
         let reportName = TestRunner.project.reporting.defaultFileNamePattern;
@@ -465,9 +459,35 @@ export class TestRunner {
             }
         }
 
-        Object.keys(replacables).forEach(itm => reportName = reportName.replace(new RegExp(`\\[${itm}\\]`, 'ig'), replacables[itm]));
+        reportName = TestRunner.replaceReportNameVars(reportName, sourceType, reportType);
 
-        return join(process.cwd(), TestRunner.project.reporting.outputFolder, `${reportName}.${reportExtension}`);
+        return join(process.cwd(), TestRunner.reportsFolder, `${reportName}.${reportExtension}`);
+    }
+
+    public static replaceReportFolderVars(reportFolder: string): string {
+        const replacables = {
+            'product': Configuration.product,
+            'environment': Configuration.environment,
+            'testTimeStamp': moment().utc().format('YYYY-MM-DD_HH-mm'),
+        };
+
+        Object.keys(replacables).forEach(itm => reportFolder = reportFolder.replace(new RegExp(`\\[${itm}\\]`, 'ig'), replacables[itm]));
+
+        return reportFolder;
+    }
+
+    public static replaceReportNameVars(modifyString: string, sourceType: string, reportType: string): string {
+        const replacables = {
+            'product': Configuration.product,
+            'environment': Configuration.environment,
+            'testTimeStamp': moment().utc().format('YYYY-MM-DD_HH-mm'),
+            'sourceType': sourceType,
+            'reportType': reportType
+        };
+
+        Object.keys(replacables).forEach(itm => modifyString = modifyString.replace(new RegExp(`\\[${itm}\\]`, 'ig'), replacables[itm]));
+
+        return modifyString;
     }
 
     /**
@@ -475,7 +495,8 @@ export class TestRunner {
      * @param browserStr the name of the browser that was initialized
      */
     public completeInit(browserStr: string): void {
-        const initReportsDirectory = join(process.cwd(), TestRunner.project.reporting.outputFolder, 'init');
+        TestRunner.reportsFolder = TestRunner.replaceReportFolderVars(TestRunner.reportsFolder);
+        const initReportsDirectory = join(process.cwd(), TestRunner.reportsFolder, 'init');
         const initReportFileName = `${this.getDateFormat()}_init_${browserStr}`;
 
         State.saveLogFile(initReportsDirectory, initReportFileName, '.txt').catch((reason) => {

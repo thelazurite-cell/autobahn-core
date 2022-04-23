@@ -24,6 +24,7 @@
         }
       ]
     },
+    "reporting": { "$ref": "#/definitions/Reporting" },
     "products": {
       "description": "The products related to the automation test project",
       "type": "array",
@@ -57,6 +58,52 @@
         },
         "headlessCommand": {
           "description": "The extra command parameters to use if the browser is running in headless mode.",
+          "type": "string",
+          "default": ""
+        }
+      }
+    },
+    "Reporting": {
+      "type": "object",
+      "properties": {
+        "outputFolder": {
+          "description": "The directory where the reports should be stored,\nthis will be worked out from the current working directory\n\ncertain values will be replaced with their actual values:\n[product] - the name of the product\n[environment] - the environment run against\n[testTimeStamp] - the time the test run started",
+          "type": "string",
+          "default": "reports"
+        },
+        "defaultExtension": {
+          "description": "if a report type has not been configured with an extension, this will be used instead",
+          "type": "string",
+          "default": "txt"
+        },
+        "defaultFileNamePattern": {
+          "description": "if a report type has not been configured with a file name pattern, this will be used instead",
+          "type": "string",
+          "default": ""
+        },
+        "types": {
+          "description": "The list of all configured file types.",
+          "type": "array",
+          "items": { "$ref": "#/definitions/ReportType" },
+          "default": []
+        }
+      }
+    },
+    "ReportType": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "description": "The report type's name. e.g. if the report type is testcafe-reporter-jest then this should be jest",
+          "type": "string",
+          "default": ""
+        },
+        "extension": {
+          "description": "The report type's file extension",
+          "type": "string",
+          "default": ""
+        },
+        "fileNamePattern": {
+          "description": "The file name pattern to be used for the report type.\ncertain values will be replaced with their actual values:\n[product] - the name of the product\n[environment] - the environment run against\n[sourceType] - the type of test run (e.g. browser, api or newman)\n[reportType] - the type of report being used (e.g. xuint, jest or junit)",
           "type": "string",
           "default": ""
         }

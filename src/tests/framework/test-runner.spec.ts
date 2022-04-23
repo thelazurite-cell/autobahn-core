@@ -9,7 +9,7 @@ import moment from 'moment';
 import sinon from 'sinon';
 import chai from 'chai';
 import chaiAsPromised from 'chai-as-promised';
-import path, { join } from 'path';
+import path, { join, resolve } from 'path';
 import { ConsoleColor } from '../../framework/helpers/console-color.enum';
 import { TestCafeRunnerStub } from '../helper-classes/testcafe-runner-stub';
 import { State } from '../../framework/logging/state';
@@ -76,7 +76,7 @@ describe('Test runner class', () => {
                 ignoresRegistry: true,
                 browsers: withBrowsers(),
                 reporting: {
-                    outputFolder: 'reports',
+                    outputFolder: 'reports/[testTimeStamp]',
                     defaultExtension: 'txt',
                     defaultFileNamePattern: 'report.[product].[environment].[sourceType]',
                     types: withTypes()
@@ -122,13 +122,13 @@ describe('Test runner class', () => {
                 const expectedReportType = 'xunit';
                 const expectedDateFormat = 'YYYY-MM-DD_HH-mm';
                 const timestampFolder = moment().utc().format(expectedDateFormat);
-                TestRunner.reportsFolder = `Reports/${timestampFolder}`;
-                const expectedReportOptions = { output: `Reports/${timestampFolder}/report.unit-testing.all.api.xml` };
+                TestRunner.reportsFolder = `reports/${timestampFolder}`;
+                const expectedReportOptions = { output: resolve(join(process.cwd(), `reports/${timestampFolder}/report.unit-testing.all.api.xml`)) };
 
                 args.saveReport = true;
 
                 const mocha = new MochaVanillaCompiler([], expectedReportType, expectedReportOptions);
-                TestRunner.reportsFolder = `Reports/${moment().utc().format('YYYY-MM-DD_HH-mm')}`;
+                TestRunner.reportsFolder = `reports/${moment().utc().format('YYYY-MM-DD_HH-mm')}`;
 
                 const momentStub = sandbox.stub(moment.fn, 'format');
                 momentStub.callsFake(() => timestampFolder);
@@ -145,13 +145,13 @@ describe('Test runner class', () => {
                 const expectedReportType = 'xunit';
                 const expectedDateFormat = 'YYYY-MM-DD_HH-mm';
                 const timestampFolder = moment().utc().format(expectedDateFormat);
-                TestRunner.reportsFolder = `Reports/${timestampFolder}`;
-                const expectedReportOptions = { output: `Reports/${timestampFolder}/report.unit-testing.all.api.xml` };
+                TestRunner.reportsFolder = `reports/${timestampFolder}`;
+                const expectedReportOptions = { output: resolve(join(process.cwd(), `reports/${timestampFolder}/report.unit-testing.all.api.xml`)) };
 
                 args.saveReport = true;
 
                 const mocha = new MochaBddCompiler([], expectedReportType, expectedReportOptions);
-                TestRunner.reportsFolder = `Reports/${moment().utc().format('YYYY-MM-DD_HH-mm')}`;
+                TestRunner.reportsFolder = `reports/${moment().utc().format('YYYY-MM-DD_HH-mm')}`;
 
                 const momentStub = sandbox.stub(moment.fn, 'format');
                 momentStub.callsFake(() => timestampFolder);
@@ -213,7 +213,7 @@ describe('Test runner class', () => {
                 TestRunner.reportsFolder = `reports/${moment().utc().format('YYYY-MM-DD_HH-mm')}`;
 
                 const sut = TestRunner.getReportFileName(SourcesType.api, 'xunit');
-                const expected = join(process.cwd(), 'reports', `report.${Configuration.product}.${Configuration.environment}.api.xml`);
+                const expected = join(process.cwd(), TestRunner.reportsFolder, `report.${Configuration.product}.${Configuration.environment}.api.xml`);
 
                 expect(sut).to.eql(expected);
             });
@@ -673,7 +673,7 @@ describe('Test runner class', () => {
                     const expectedDateFormat = 'YYYY-MM-DD_HH-mm';
                     const timestampFolder = moment().utc().format(expectedDateFormat);
                     const expectedReportType = 'xunit';
-                    const expectedReportName = `Reports/${timestampFolder}/report.unit-testing.all.browser-chrome.xml`;
+                    const expectedReportName = resolve(join(process.cwd(), `reports/${timestampFolder}/report.unit-testing.all.browser-chrome.xml`));
 
                     const options: FrameworkArguments = {
                         product: Configuration.product,
@@ -952,7 +952,7 @@ describe('Test runner class', () => {
                     const expectedReportType = 'xunit';
                     const expectedDateFormat = 'YYYY-MM-DD_HH-mm';
                     const timestampFolder = moment().utc().format(expectedDateFormat);
-                    const expectedReportName = `Reports/${timestampFolder}/report.unit-testing.all.browser-chrome.xml`;
+                    const expectedReportName = resolve(join(process.cwd(), `reports/${timestampFolder}/report.unit-testing.all.browser-chrome.xml`));
                     const expectedFilter = 'fixtureName=\'(.*)Foo(.*)\'';
 
                     const options: FrameworkArguments = {
@@ -1073,7 +1073,7 @@ describe('Test runner class', () => {
                 const expectedFileExtension = '.txt';
                 const expectedDateFormat = 'YYYY-MM-DD_HH-mm';
                 const timestampFolder = moment().utc().format(expectedDateFormat);
-                const expectedReportsDirectory = `./Reports/${timestampFolder}/init`;
+                const expectedReportsDirectory = resolve(join(process.cwd(), `./reports/${timestampFolder}/init`));
 
                 const momentStub = sandbox.stub(moment.fn, 'toISOString');
                 momentStub.callsFake(() => timestampFolder);
@@ -1082,7 +1082,11 @@ describe('Test runner class', () => {
                 const createInstanceStub = sandbox.stub(testRunner, 'createInstance');
                 createInstanceStub.returns(Promise.resolve(<TestCafeInstance>{}));
                 const runnerStub = sandbox.stub(testRunner.runner, 'run');
-                runnerStub.returns(Promise.resolve(0));
+                runnerStub.callsFake(() => {
+                    TestRunner.reportsFolder = TestRunner.replaceReportFolderVars(TestRunner.reportsFolder);
+                    return Promise.resolve(0);
+                });
+
                 const createStub = sandbox.stub(testRunner, 'createRunner');
                 createStub.returns(testRunner.runner);
                 const saveLogStub = sandbox.stub(State, 'saveLogFile');
@@ -1196,7 +1200,7 @@ describe('Test runner class', () => {
 });
 
 async function assertConfigureTestRunnerWorks(timestampFolder: string, sandbox: sinon.SinonSandbox, testRunner: TestRunner) {
-    TestRunner.reportsFolder = `Reports/${timestampFolder}`;
+    TestRunner.reportsFolder = `reports/${timestampFolder}`;
 
     const expectedLocations: string[] = [
         './dist/framework/timespan/timespan.js',
@@ -1206,9 +1210,9 @@ async function assertConfigureTestRunnerWorks(timestampFolder: string, sandbox: 
 
     const expectedTags = ['~@Ignore', '~@AnotherTagToIgnore', '~@Amet'];
     const expectedBrowser = 'chrome';
-    const expectedVideoFolder = `Reports/${timestampFolder}/videos/`;
+    const expectedVideoFolder = resolve(join(process.cwd(), `reports/${timestampFolder}/videos/`));
     const expectedVideoOptions = { singleFile: false, failedOnly: true };
-    const expectedScreenshotOptions = { path: `Reports/${timestampFolder}/screenshots/`, takeOnFails: true };
+    const expectedScreenshotOptions = { path: resolve(join(process.cwd(), `reports/${timestampFolder}/screenshots/`)), takeOnFails: true };
 
     const srcStub = sandbox.stub(testRunner.runner, 'src');
     srcStub.callsFake(() => { return testRunner.runner; });
@@ -1241,8 +1245,8 @@ async function assertTheCorrectBrowserReportSet(expectedBrowser: string, sandbox
     const expectedReportType = `browser-${expectedBrowser}`;
     const expectedDateFormat = 'YYYY-MM-DD_HH-mm';
     const timestampFolder = moment().utc().format(expectedDateFormat);
-    TestRunner.reportsFolder = `Reports/${timestampFolder}`;
-    const expectedReportLocation = `Reports/${timestampFolder}/report.unit-testing.all.${expectedReportType}.xml`;
+    TestRunner.reportsFolder = `reports/${timestampFolder}`;
+    const expectedReportLocation = resolve(join(process.cwd(), `reports/${timestampFolder}/report.unit-testing.all.${expectedReportType}.xml`));
 
     const momentStub = sandbox.stub(moment.fn, 'format');
     momentStub.callsFake(() => timestampFolder);
@@ -1250,6 +1254,7 @@ async function assertTheCorrectBrowserReportSet(expectedBrowser: string, sandbox
     const createInstanceStub = sandbox.stub(testRunner, 'createInstance');
     createInstanceStub.returns(Promise.resolve(<TestCafeInstance>{}));
     const runnerStub = sandbox.stub(testRunner.runner, 'run');
+    runnerStub.callsFake(() => TestRunner.replaceReportFolderVars(TestRunner.reportsFolder));
     runnerStub.returns(Promise.resolve(0));
     const createStub = sandbox.stub(testRunner, 'createRunner');
     createStub.returns(testRunner.runner);

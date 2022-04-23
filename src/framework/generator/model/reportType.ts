@@ -15,6 +15,7 @@ export class ReportType {
      * [product] - the name of the product
      * [environment] - the environment run against
      * [sourceType] - the type of test run (e.g. browser, api or newman)
+     * [reportType] - the type of report being used (e.g. xuint, jest or junit) 
     */
     public fileNamePattern?: string = '';
 }

@@ -33,7 +33,7 @@ export class Project {
     public reporting: Reporting = {
         outputFolder: '../Reports',
         defaultExtension: 'txt',
-        defaultFileNamePattern: 'report.[product].[environment].[sourceType]',
+        defaultFileNamePattern: 'report.[product].[environment].[reportType]',
         types: [
             {
                 name: 'xunit',

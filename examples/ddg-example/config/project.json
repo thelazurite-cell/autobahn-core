@@ -14,7 +14,7 @@
     }
   ],
   "reporting": {
-    "outputFolder": "reports",
+    "outputFolder": "reports/[testTimeStamp]",
     "defaultExtension": "txt",
     "defaultFileNamePattern": "report.[product].[environment].[sourceType]",
     "types": [
