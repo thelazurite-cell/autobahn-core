@@ -1,5 +1,6 @@
 import { Product } from './product';
 import { Browser } from '../../configuration/browser';
+import { Reporting } from './reporting';
 
 
 export class Project {
@@ -28,6 +29,30 @@ export class Project {
             headlessCommand: ' --disable-web-security --allow-insecure-localhost --allow-running-insecure-content --enable-automation'
         }
     ];
+
+    public reporting: Reporting = {
+        outputFolder: '../Reports',
+        defaultExtension: 'txt',
+        defaultFileNamePattern: 'report.[product].[environment].[reportType]',
+        types: [
+            {
+                name: 'xunit',
+                extension: 'xml'
+            },
+            {
+                name: 'junit',
+                extension: 'xml'
+            },
+            {
+                name: 'jest',
+                extension: 'xml'
+            },
+            {
+                name: 'cucumber-json',
+                extension: 'xml'
+            }
+        ]
+    };
 
     /**
      * The products related to the automation test project
