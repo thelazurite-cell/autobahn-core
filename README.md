@@ -23,6 +23,12 @@
 </p>
 <h1 align="center">Autobahn</h3> 
 
+<p align="center">
+<a href="https://github.com/thelazurite-cell/autobahn-core/actions/workflows/publish.yml"><img alt="Release" src="https://github.com/thelazurite-cell/autobahn-core/actions/workflows/publish.yml/badge.svg" data-canonical-src="https://github.com/thelazurite-cell/autobahn-core/actions/workflows/publish.yml/badge.svg" style="max-width:100%;"></a>
+<a href="https://github.com/thelazurite-cell/autobahn-core/actions/workflows/test-report.yml"><img alt="Tests" src="https://github.com/thelazurite-cell/autobahn-core/actions/workflows/test-report.yml/badge.svg" data-canonical-src="https://github.com/thelazurite-cell/autobahn-core/actions/workflows/test-report.yml/badge.svg" style="max-width:100%;"></a>
+<a href="https://www.npmjs.com/package/autobahn-core"><img alt="NPM Version" src="https://img.shields.io/npm/v/autobahn-core.svg" data-canonical-src="https://img.shields.io/npm/v/autobahn-core.svg" style="max-width:100%;"></a>
+ <a href="https://opensource.org/licenses/MIT"><img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg"></a>
+</p>
 
 # Introduction
 
@@ -114,6 +120,8 @@ Building and testing can be performed by running: `npm run ci`
 Always happy to have contributions & feedback for the project :-)
 
 The release branch for this repository is `main`, code should first have it's own branch then merged into `develop`
+
+Please also check our [Code Of Conduct](https://github.com/thelazurite-cell/autobahn-core/blob/main/code_of_conduct.md)
 
 # Other noteworthy projects and resources
 
