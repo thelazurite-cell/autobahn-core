@@ -114,7 +114,7 @@
     "shelljs": "^0.8.5",
     "superagent": "^7.1.2",
     "supertest": "^6.2.2",
-    "testcafe": "^1.18.6",
+    "testcafe": "^15.1.317922",
     "testcafe-reporter-cucumber-json": "^6.3.0",
     "testcafe-reporter-jest": "^3.0.12",
     "tweetnacl-util": "^0.15.1",
